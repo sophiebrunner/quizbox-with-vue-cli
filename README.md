@@ -10,21 +10,21 @@
 
 # Quizbox Session
 
-- [] To start a Quiz Box session, at least one topic and the number of questions (10, 20 or 30) to be asked must be selected.
+- [ ] To start a Quiz Box session, at least one topic and the number of questions (10, 20 or 30) to be asked must be selected.
 
 # Question Randomness
 
-- [] If more than one topic is selected, an equal number (if possible) of randomly selected questions from all topics should be used.
+- [ ] If more than one topic is selected, an equal number (if possible) of randomly selected questions from all topics should be used.
 
 # Browse Quesions
 
-- [] Besides a quizbox session it is also possible to browse all questions from each category.
+- [ ] Besides a quizbox session it is also possible to browse all questions from each category.
 
 ## Basic Data
 
 - categories and questions (objects)
-  - [] first implemented directly to the repo
-  - [] later provided by a backend
+  - [ ] first implemented directly to the repo
+  - [ ] later provided by a backend
 - numberOfQuestions for the categories (array.length)
 
 # Components

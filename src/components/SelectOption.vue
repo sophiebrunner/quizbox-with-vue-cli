@@ -1,8 +1,10 @@
 <template>
-  <h2>{{ header }}</h2>
+  <h2>{{ headline }}</h2>
   <label for="select-option">{{ description }}</label>
   <select id="select-option">
-    <option value="test">Options</option>
+    <option v-for="option in selectOptions" :key="option">
+      {{ option }}
+    </option>
   </select>
 </template>
 
@@ -10,11 +12,14 @@
 export default {
   name: "SelectOption",
   props: {
-    header: {
+    headline: {
       type: String,
     },
     description: {
       type: String,
+    },
+    selectOptions: {
+      type: Array,
     },
   },
 };

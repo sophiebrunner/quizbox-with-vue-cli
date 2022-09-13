@@ -1,9 +1,10 @@
 <template>
   <SelectOption
-    header="Play Quizbox"
+    headline="Play Quizbox"
     description="Quiz time - test what you know"
+    :select-options="numberOfQuestions"
   ></SelectOption>
-  <BaseList header="Questions areas" description="05"></BaseList>
+  <BaseList headline="Questions areas" description="05"></BaseList>
   <BaseButton></BaseButton>
 </template>
 
@@ -15,5 +16,10 @@ import BaseButton from "@/components/BaseButton.vue";
 export default {
   name: "PlayQuizbox",
   components: { SelectOption, BaseButton, BaseList },
+  data() {
+    return {
+      numberOfQuestions: [10, 20, 30],
+    };
+  },
 };
 </script>

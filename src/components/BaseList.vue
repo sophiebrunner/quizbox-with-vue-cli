@@ -1,8 +1,11 @@
 <template>
-  <h3>{{ header }}</h3>
+  <h3>{{ headline }}</h3>
   <p>{{ description }}</p>
   <ul>
-    <li><slot></slot>Item 1<slot></slot></li>
+    <li v-for="item in listItems" :key="item.id">
+      <slot :item="item" name="list-item">{{ item.text }}</slot
+      ><slot></slot>
+    </li>
   </ul>
 </template>
 
@@ -10,11 +13,14 @@
 export default {
   name: "BaseList",
   props: {
-    header: {
+    headline: {
       type: String,
     },
     description: {
       type: String,
+    },
+    listItems: {
+      type: Array,
     },
   },
 };

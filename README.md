@@ -1,4 +1,4 @@
-### Quizbox - Final task for my Coding Bootcamp
+# Quizbox - Final task for my Coding Bootcamp
 
 ## About
 
@@ -8,15 +8,15 @@
 
 ## Features
 
-# Quizbox Session
+### Quizbox Session
 
 - [ ] To start a Quiz Box session, at least one topic and the number of questions (10, 20 or 30) to be asked must be selected.
 
-# Question Randomness
+### Question Randomness
 
 - [ ] If more than one topic is selected, an equal number (if possible) of randomly selected questions from all topics should be used.
 
-# Browse Quesions
+### Browse Quesions
 
 - [ ] Besides a quizbox session it is also possible to browse all questions from each category.
 
@@ -27,7 +27,7 @@
   - [ ] later provided by a backend
 - numberOfQuestions for the categories (array.length)
 
-# Components
+### Components
 
 **1. SelectOption.vue**
 
@@ -54,7 +54,7 @@
 - p with question (centered and bold)
 - BaseButton.vue with text "Next" resp "Finish" (session.finished ? "Finish" : "Next")
 
-# Views
+### Views
 
 **1. PlayQuizbox.vue (aka HomeView.vue)**
 

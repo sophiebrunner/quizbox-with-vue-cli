@@ -1,6 +1,6 @@
 <template>
   <h3>{{ headline }}</h3>
-  <p>{{ description }}</p>
+  <p>{{ numberOfItems }}</p>
   <ul>
     <li v-for="item in listItems" :key="item.id">
       <slot :item="item" name="list-item">{{ item.text }}</slot
@@ -16,7 +16,7 @@ export default {
     headline: {
       type: String,
     },
-    description: {
+    numberOfItems: {
       type: String,
     },
     listItems: {

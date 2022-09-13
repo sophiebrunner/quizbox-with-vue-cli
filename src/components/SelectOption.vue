@@ -1,9 +1,10 @@
 <template>
-  <h2>{{ headline }}</h2>
+  <h2>{{ action }}</h2>
   <label for="select-option">{{ description }}</label>
   <select id="select-option">
-    <option v-for="option in selectOptions" :key="option">
-      {{ option }}
+    <option v-for="option in selectOptions" :key="option.id">
+      {{ option
+      }}<slot :option="option" name="option-select">{{ option.category }}</slot>
     </option>
   </select>
 </template>
@@ -12,7 +13,7 @@
 export default {
   name: "SelectOption",
   props: {
-    headline: {
+    action: {
       type: String,
     },
     description: {

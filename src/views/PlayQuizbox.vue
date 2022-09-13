@@ -1,10 +1,13 @@
 <template>
   <SelectOption
-    headline="Play Quizbox"
-    description="Quiz time - test what you know"
+    :action="action"
+    :description="questionAreas.description"
     :select-options="numberOfQuestions"
   ></SelectOption>
-  <BaseList headline="Questions areas" description="05"></BaseList>
+  <BaseList
+    :headline="questionAreas.headline"
+    :numberOfItems="numberOfQuestions.length"
+  ></BaseList>
   <BaseButton></BaseButton>
 </template>
 
@@ -18,7 +21,12 @@ export default {
   components: { SelectOption, BaseButton, BaseList },
   data() {
     return {
+      action: "Play Quizbox",
       numberOfQuestions: [10, 20, 30],
+      questionAreas: {
+        headline: "Question Areas",
+        description: "Quiz time - test what you know",
+      },
     };
   },
 };

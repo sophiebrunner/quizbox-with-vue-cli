@@ -1,6 +1,9 @@
 <template>
-  <SelectOption></SelectOption>
-  <BaseList></BaseList>
+  <SelectOption
+    header="Play Quizbox"
+    description="Quiz time - test what you know"
+  ></SelectOption>
+  <BaseList header="Questions areas" description="05"></BaseList>
   <BaseButton></BaseButton>
 </template>
 

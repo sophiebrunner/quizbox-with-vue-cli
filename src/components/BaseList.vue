@@ -1,6 +1,6 @@
 <template>
-  <h3>BaseList</h3>
-  <p>Description</p>
+  <h3>{{ header }}</h3>
+  <p>{{ description }}</p>
   <ul>
     <li><slot></slot>Item 1<slot></slot></li>
   </ul>
@@ -9,5 +9,13 @@
 <script>
 export default {
   name: "BaseList",
+  props: {
+    header: {
+      type: String,
+    },
+    description: {
+      type: String,
+    },
+  },
 };
 </script>

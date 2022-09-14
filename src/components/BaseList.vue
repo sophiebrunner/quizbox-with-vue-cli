@@ -9,6 +9,8 @@
   </ul>
 </template>
 
+//optionale property description (abfangen und ggf. ausgeben) //numberOfItems
+später als computed property (.length)
 <script>
 export default {
   name: "BaseList",
@@ -17,7 +19,7 @@ export default {
       type: String,
     },
     numberOfItems: {
-      type: String,
+      type: Number,
     },
     listItems: {
       type: Array,

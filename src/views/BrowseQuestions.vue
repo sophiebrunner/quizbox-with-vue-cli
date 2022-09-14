@@ -1,17 +1,18 @@
 <template>
   <SelectOption
-    :action="quizData.action"
-    :description="quizData.description"
-    :select-options="quizData.data"
+    :action="text.action"
+    :description="text.description"
+    :select-options="quizData"
   >
     <template #select-option="{ scopedData }">{{
       scopedData.option.category
     }}</template>
   </SelectOption>
   <BaseList
-    :headline="quizData.headline"
+    :headline="text.headline"
     :numberOfItems="numberOfQuestions"
   ></BaseList>
+  {{ quizData }}
 </template>
 
 <script>
@@ -23,230 +24,58 @@ export default {
   components: { SelectOption, BaseList },
   data() {
     return {
-      numberOfQuestions: "05",
-      quizData: {
+      numberOfQuestions: 5,
+      text: {
         action: "Browse Questions",
         description: "Choose a category with questions",
         headline: "Questions from the chapter",
-        data: [
-          {
-            category: "HTML and Basic CSS",
-            questions: [
-              "What is the DOCTYPE?",
-              "What is a HTML comment?",
-              "What is a HTML tag?",
-              "What are HTML attributes?",
-              "What basic structure of a HTML document?",
-              "What is the <title> tag?",
-              "What information is located within the <head> tag?",
-              "What is the purpose of the <body> tag?",
-              "What are <meta> elements?",
-              "What are semantic elements?",
-              "What are generic elements?",
-              "What elements are used to structure the main contents of a document?",
-              "What are heading elements?",
-              "What is the <p> tag?",
-              "What elements are used to structure text content?",
-              "What is an anchor tag?",
-              "How can an anchor be utilized to navigate within the same document?",
-              "Name the different list elements!",
-              "What is a CSS ruleset?",
-              "What is a shorthand property?",
-              "What is a inline style?",
-              "What is a link tag?",
-              "Explain the box model?",
-              "The border property is a shorthand for what?",
-              "What is box-sizing?",
-              "What is a selector?",
-              "What are the basic selectors?",
-              "What is the purpose of a selector combinator?",
-              "Name all four selector combinators!",
-              "What is a selector list?",
-              "What is a specific and a generic font family name?",
-              "What is the purpose of the color property?",
-              "What is the purpose of the background-color property?",
-              "Name at least two ways to specify color values!",
-              "Name at least two ways to specify color values!",
-              "What is a pseudo class?",
-              "What is a pseudo element?",
-              "What is the purpose of the cascade?",
-              "What is importance?",
-              "What is specificity?",
-              "What is source order?",
-              "What is inheritance?",
-              "What is a fallback?",
-              "What does reset or normalize mean?",
-              "What is the purpose of the display property?",
-              "What are inline elements?",
-              "What are block level elements?",
-              "What does inline-block mean?",
-              "What is display: none?",
-              "What is visibility: hidden?",
-              "What does normal document flow mean?",
-              "What is the position property?",
-              "What is a positioned element?",
-              "How does position: absolute work?",
-              "How does position: relative work?",
-              "How does position: fixed work?",
-              "What are font relative units?",
-              "What does em and rem mean?",
-              "What is a perfect use case for the ch unit?",
-              "What are viewport units?",
-              "What are @ rules?",
-              "Can you name at least two media types?",
-              "What is a media query? ",
-              "What are breakpoints?",
-              "What does responsive web design mean?",
-              "What is the difference between desktop and mobile first?",
-            ],
-          },
-          {
-            category: "HTML and Advanced CSS",
-            questions: [
-              "What is the purpose of the flex-direction property?",
-              "What is a flexbox?",
-              "What is the p?",
-              "What is the flex-shrink property?",
-              "What is the flex-basis property?",
-              "What is the flex-grow property?",
-              "What is the justify-content property?",
-              "What is the align-items property?",
-              "What is the purpose of the transform property?",
-              "What is the purpose of the transform-origin property?",
-              "What is the purpose of the translate() function?",
-              "What is the purpose of the scale() function?",
-              "What is a transition?",
-              "What is transition-property property?",
-              "What is a transition timing function?",
-              "What is a grid?",
-              "What properties are used to define grid columns?",
-              "What is the fr unit?",
-              "What is the currentColor keyword?",
-              "What is the background property?",
-              "What a is a gradient?",
-              "What is a color stop when using a gradient?",
-              "What is the background-size property?",
-              "What are custom properties?",
-              "How can a custom property be defined?",
-              "How does the var() function work?",
-              "What is the background-repeat property?",
-              "What is the difference between the background-color and background-image property?",
-              "What is the purpose of the background-clip property?",
-            ],
-          },
-          {
-            category: "JavaScript Basics",
-            questions: [
-              "Name the two different data types in JavaScript",
-              "Name three data types?",
-              "What are structural data types?",
-              "What are primitive data types?",
-              "What is call by value?",
-              "What is call by reference?",
-              "What are shadowed variable names?",
-              "What will be the output: console.log(1++)",
-              "What will be the output: console.log(4--)",
-              "What is an array?",
-              "What is an object?",
-              "Can an array include an object?",
-              "Can an array include another arrays?",
-              "Can an object include an array?",
-              "What are logical operators?",
-              "What are arithmetical operators?",
-              "What are comparison operators?",
-              "What is a function scope?",
-              "What is the global scope?",
-              "Name three ways to declare variables",
-              "What will be the output: console.log('2' < 4)",
-              "What is a function?",
-              "What will be the output: console.log(4 == '4')",
-              "What will be the output: console.log(4 === '4')",
-              "What is the `return` statement?",
-              "What are functions parameters?",
-              "What is an expression?",
-              "What are for loops?",
-              "What are implicit coercions?",
-              "What is the difference between the equality and strict equality operator?",
-              "What does increment and decrement mean?",
-              "What is important when naming functions and variables?",
-              "What is a switch-case statement?",
-            ],
-          },
-          {
-            category: "Web Apps Foundation",
-            questions: [
-              "What is the window object?",
-              "What is the document object?",
-              "What is the element.style object property?",
-              "What is the querySelector() method?",
-              "What is the textContent property?",
-              "What is the innerText property?",
-              "What is the DOM?",
-              "What are nodes?",
-              "What is the children property?",
-              "What is the childNodes property?",
-              "What is the document.createElement() method?",
-              "What is the document.createTextNode() method?",
-              "What is the appendChild() method?",
-              "What is the insertBefore() method ?",
-              "What are attributes?",
-              "What is the setAttribute() method?",
-              "What is the removeAttribute() method?",
-              "What is the getAttribute() method?",
-              "What are custom html attributes?",
-              "What are the the event phases of DOM events?",
-              "What is the addEventListener() method?",
-              "What is the removeEventListener() method?",
-              "What is the event object?",
-              "What is the event.target property?",
-              "What is the event.currentTarget property?",
-              "What is the event.eventPhase property?",
-              "What is the event.stopPropagation() method?",
-              "What is JSON?",
-              "What is the JSON.stringify() method?",
-              "What is the JSON.parse() method?",
-              "What is the Local Storage?",
-              "What is the Origin of websites?",
-              "What is the localStorage.setItem() method?",
-              "What is the localStorage.getItem() method?",
-            ],
-          },
-          {
-            category: "Terminal and Shell",
-            questions: [
-              "What is a terminal?",
-              "What is a alias?",
-              "What is the 'mv' command?",
-              "What is the 'cd' command?",
-              "What is the 'mkdir' command?",
-              "What is the 'touch' command?",
-              "What is the 'rm' command?",
-              "What does ~ mean?",
-              "What is the 'chsh' command?",
-              "What does piping mean?",
-              "What is the 'echo' command?",
-              "What is the 'cat' command?",
-              "What is the 'grep' command?",
-              "What is the 'less' command?",
-              "What is the 'ls' command?",
-              "What is the 'cp' command?",
-              "What is the 'mv' command?",
-              "What is the 'wc' command?",
-              "What is the 'pwd' command?",
-              "What is the 'chmod' command?",
-              "What is the 'which' command?",
-            ],
-          },
-        ],
       },
-      categories: [
-        "Web Dev Foundation",
-        "Coding Foundation",
-        "Web Apps Foundation",
-        "Restful Backends",
-        "Web Apps with Vue.JS",
-      ],
+      quizData: [],
     };
+  },
+  created() {
+    const apiFetches = [
+      handleFetch(
+        "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/basics-html-css.json"
+      ),
+      handleFetch(
+        "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/advanced-html-css.json"
+      ),
+      handleFetch(
+        "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/basics-js.json"
+      ),
+      handleFetch(
+        "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/first-js-web-app.json"
+      ),
+      handleFetch(
+        "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/terminal-and-shell.json"
+      ),
+    ];
+
+    function getCategoryByUrl(url) {
+      return url
+        .replace(
+          "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/",
+          ""
+        )
+        .replace(".json", "");
+    }
+
+    function handleFetch(url) {
+      return fetch(url)
+        .then((response) => response.json())
+        .then((jsonData) => {
+          //Hier Daten aufbereiten
+          return {
+            category: getCategoryByUrl(url),
+            data: jsonData,
+          };
+        });
+    }
+
+    Promise.all(apiFetches).then((result) => {
+      this.quizData = result;
+    });
   },
 };
 </script>

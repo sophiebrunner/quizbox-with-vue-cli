@@ -11,8 +11,12 @@
   <BaseList
     :headline="text.headline"
     :numberOfItems="numberOfQuestions"
-  ></BaseList>
-  {{ quizData }}
+    :list-items="quizData"
+  >
+    <template #list-item="{ scopedData }">{{
+      scopedData.item.questions
+    }}</template>
+  </BaseList>
 </template>
 
 <script>
@@ -58,7 +62,9 @@ export default {
           "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/",
           ""
         )
-        .replace(".json", "");
+        .replace(".json", "")
+        .split("-")
+        .join(" ");
     }
 
     function handleFetch(url) {

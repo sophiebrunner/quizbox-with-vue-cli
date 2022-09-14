@@ -3,8 +3,7 @@
   <p>{{ numberOfItems }}</p>
   <ul>
     <li v-for="item in listItems" :key="item.id">
-      <slot :item="item" name="list-item">{{ item.text }}</slot
-      ><slot></slot>
+      <slot :item="item" name="list-item">{{ item.data }}</slot>
     </li>
   </ul>
 </template>
@@ -23,6 +22,10 @@ export default {
     },
     listItems: {
       type: Array,
+    },
+    description: {
+      type: String,
+      required: false,
     },
   },
 };

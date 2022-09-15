@@ -1,26 +1,22 @@
 <template>
-  <BaseHeader :headline="text.action"
-    ><template v-slot:headline
-      ><h3>{{ text.action }}</h3></template
-    ></BaseHeader
-  >
-  <SelectOption
-    :action="text.action"
-    :description="text.description"
-    :select-options="quizData"
-  >
+  <BaseHeader :headline="text.action"></BaseHeader>
+  <SelectOption :description="text.description" :select-options="quizData">
     <template #select-option="scopedData">{{
       scopedData.option.category
     }}</template>
   </SelectOption>
-  <BaseList
-    :headline="text.headline"
-    :numberOfItems="numberOfQuestions"
-    :list-items="quizData[0]"
+  <BaseHeader :headline="text.headline" :description="quizData.length"
+    ><template v-slot:headline
+      ><h3>{{ text.headline }}</h3></template
+    ></BaseHeader
   >
-    <template #list-item="scopedData">{{ scopedData.item.category }}</template>
+  <BaseList :list-items="quizData"
+    ><template #list-item="scopedData"
+      ><template v-for="data of scopedData.item.data" :key="data"
+        ><li>{{ data }} - {{ scopedData.item.category }}</li></template
+      ></template
+    >
   </BaseList>
-  {{ quizData }}
 </template>
 
 <script>
@@ -33,7 +29,6 @@ export default {
   components: { SelectOption, BaseList, BaseHeader },
   data() {
     return {
-      numberOfQuestions: 5,
       text: {
         action: "Browse Questions",
         description: "Choose a category with questions",

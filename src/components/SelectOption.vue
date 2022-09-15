@@ -1,5 +1,5 @@
 <template>
-  <h2>{{ action }}</h2>
+  <slot />
   <label for="select-option">{{ description }}</label>
   <select id="select-option">
     <option v-for="option in selectOptions" :key="option.category">

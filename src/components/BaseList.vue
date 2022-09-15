@@ -1,5 +1,5 @@
 <template>
-  <h3>{{ headline }}</h3>
+  <slot />
   <p>{{ numberOfItems }}</p>
   <ul>
     <li v-for="item in listItems" :key="item.category">
@@ -14,9 +14,6 @@ später als computed property (.length)
 export default {
   name: "BaseList",
   props: {
-    headline: {
-      type: String,
-    },
     numberOfItems: {
       type: Number,
     },

@@ -1,31 +1,36 @@
 <template>
+  <BaseHeader :headline="text.action"
+    ><template v-slot:headline
+      ><h3>{{ text.action }}</h3></template
+    ></BaseHeader
+  >
   <SelectOption
     :action="text.action"
     :description="text.description"
     :select-options="quizData"
   >
-    <template #select-option="{ scopedData }">{{
+    <template #select-option="scopedData">{{
       scopedData.option.category
     }}</template>
   </SelectOption>
   <BaseList
     :headline="text.headline"
     :numberOfItems="numberOfQuestions"
-    :list-items="quizData"
+    :list-items="quizData[0]"
   >
-    <template #list-item="{ scopedData }">{{
-      scopedData.item.questions
-    }}</template>
+    <template #list-item="scopedData">{{ scopedData.item.category }}</template>
   </BaseList>
+  {{ quizData }}
 </template>
 
 <script>
 import SelectOption from "@/components/SelectOption.vue";
 import BaseList from "@/components/BaseList.vue";
+import BaseHeader from "@/components/BaseHeader.vue";
 
 export default {
   name: "BrowseQuestions",
-  components: { SelectOption, BaseList },
+  components: { SelectOption, BaseList, BaseHeader },
   data() {
     return {
       numberOfQuestions: 5,
@@ -74,7 +79,7 @@ export default {
           //Hier Daten aufbereiten
           return {
             category: getCategoryByUrl(url),
-            data: jsonData,
+            data: jsonData.questions,
           };
         });
     }

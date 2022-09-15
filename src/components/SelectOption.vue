@@ -3,7 +3,7 @@
   <label for="select-option">{{ description }}</label>
   <select id="select-option">
     <option v-for="option in selectOptions" :key="option.category">
-      <slot :option="option" name="option-select">{{ option.category }}</slot>
+      <slot :option="option" name="select-option">{{ option.category }}</slot>
     </option>
   </select>
 </template>
@@ -20,6 +20,9 @@ export default {
     },
     selectOptions: {
       type: Array,
+      default: () => [
+        { data: "Here comes the questions", category: "Category" },
+      ],
     },
   },
 };

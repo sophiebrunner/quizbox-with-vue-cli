@@ -2,7 +2,7 @@
   <h3>{{ headline }}</h3>
   <p>{{ numberOfItems }}</p>
   <ul>
-    <li v-for="item in listItems" :key="item.id">
+    <li v-for="item in listItems" :key="item.category">
       <slot :item="item" name="list-item">{{ item.data }}</slot>
     </li>
   </ul>
@@ -22,6 +22,9 @@ export default {
     },
     listItems: {
       type: Array,
+      default: () => [
+        { data: "Here comes the questions", category: "Category" },
+      ],
     },
     description: {
       type: String,

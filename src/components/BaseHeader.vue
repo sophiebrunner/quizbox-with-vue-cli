@@ -1,5 +1,5 @@
 <template>
-  <slot name="headline"
+  <slot :headline="headline" name="headline"
     ><h2>{{ headline }}</h2></slot
   >
   <p>{{ description }}</p>

@@ -19,9 +19,6 @@ export default {
     },
     listItems: {
       type: Array,
-      default: () => [
-        { data: "Here comes the questions", category: "Category" },
-      ],
     },
     description: {
       type: String,

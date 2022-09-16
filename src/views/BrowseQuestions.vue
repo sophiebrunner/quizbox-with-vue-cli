@@ -1,21 +1,25 @@
 <template>
   <BaseHeader :headline="text.action"></BaseHeader>
-  <SelectOption :description="text.description" :select-options="quizData">
+  <SelectOption
+    :description="text.description"
+    :select-options="quizData"
+    @change="onCategorySelect"
+  >
     <template #select-option="scopedData">{{
       scopedData.option.category
     }}</template>
   </SelectOption>
-  <BaseHeader :headline="text.headline" :description="quizData.length"
+  {{ selectedCategory }}
+  <BaseHeader
+    :headline="text.headline"
+    :description="quizData.length.toString()"
     ><template v-slot:headline
       ><h3>{{ text.headline }}</h3></template
     ></BaseHeader
   >
-  <BaseList :list-items="quizData"
-    ><template #list-item="scopedData"
-      ><template v-for="data of scopedData.item.data" :key="data"
-        ><li>{{ data }} - {{ scopedData.item.category }}</li></template
-      ></template
-    >
+  <!-- Wie Liste conditional rendern? v-if? Welche Logik? Event in SelectOption abfangen? -->
+  <BaseList :list-items="QuestionsFromSelectedCategory"
+    ><template #list-item="scopedData">{{ scopedData.item }} </template>
   </BaseList>
 </template>
 
@@ -35,7 +39,23 @@ export default {
         headline: "Questions from the chapter",
       },
       quizData: [],
+      selectedCategory: "",
     };
+  },
+  computed: {
+    allQuestions() {
+      return this.quizData.flatMap((data) => data.questions);
+    },
+    QuestionsFromSelectedCategory() {
+      return this.quizData.find(
+        (categoryItem) => categoryItem.category === this.selectedCategory
+      )?.questions;
+    },
+  },
+  methods: {
+    onCategorySelect(value) {
+      this.selectedCategory = value;
+    },
   },
   created() {
     const apiFetches = [
@@ -74,7 +94,7 @@ export default {
           //Hier Daten aufbereiten
           return {
             category: getCategoryByUrl(url),
-            data: jsonData.questions,
+            questions: jsonData.questions,
           };
         });
     }

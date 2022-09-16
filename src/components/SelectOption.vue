@@ -1,7 +1,11 @@
 <template>
   <slot />
   <label for="select-option">{{ description }}</label>
-  <select id="select-option">
+  <select
+    id="select-option"
+    @change="$emit('change', $event.target.value)"
+    ref="select"
+  >
     <option v-for="option in selectOptions" :key="option.category">
       <slot :option="option" name="select-option">{{ option.category }}</slot>
     </option>
@@ -12,9 +16,6 @@
 export default {
   name: "SelectOption",
   props: {
-    action: {
-      type: String,
-    },
     description: {
       type: String,
     },
@@ -24,6 +25,11 @@ export default {
         { data: "Here comes the questions", category: "Category" },
       ],
     },
+  },
+  emits: ["change"],
+  mounted() {
+    this.$emit("change", this.$refs.select.value);
+    console.log("Hallo ", this.$refs.select.value);
   },
 };
 </script>

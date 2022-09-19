@@ -32,6 +32,19 @@ export default {
       quizData: [],
     };
   },
+  computed: {
+    allQuestions() {
+      return this.quizData.flatMap((data) => data.questions);
+    },
+    questionsFromSelectedCategory() {
+      return this.quizData.find(
+        (categoryItem) => categoryItem.category === this.selectedCategory
+      )?.questions;
+    },
+    numberOfQuestionsFromSelectedCategory() {
+      return this.questionsFromSelectedCategory?.length.toString();
+    },
+  },
   methods: {
     onNumberOfQuestionsSelect(value) {
       this.chosenNumber = value;
@@ -39,53 +52,53 @@ export default {
     },
   },
   created() {
-    const apiFetches = [
-      handleFetch(
-        "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/basics-html-css.json"
-      ),
-      handleFetch(
-        "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/advanced-html-css.json"
-      ),
-      handleFetch(
-        "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/basics-js.json"
-      ),
-      handleFetch(
-        "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/first-js-web-app.json"
-      ),
-      handleFetch(
-        "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/terminal-and-shell.json"
-      ),
-    ];
+    const categoryLabels = new Map([
+      ["basics-html-css", "Web Dev Foundation"],
+      ["advanced-html-css", "Advanced HTML"],
+      ["basics-js", "Coding Foundation"],
+      ["first-js-web-app", "Web Apps Foundation"],
+      ["terminal-and-shell", "Terminal and Shell"],
+    ]);
+    // const categories = categoryLabels.keys();
 
-    function getCategoryByUrl(url) {
-      const categoryByUrl = url
-        .replace(
-          "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/",
-          ""
-        )
-        .replace(".json", "")
-        .split("-")
-        .join(" ");
-      const categoryWithUpperCases = categoryByUrl
-        .split(" ")
-        .map(function (word) {
-          return word.charAt(0).toUpperCase() + word.slice(1);
-        })
-        .join(" ");
-      return categoryWithUpperCases;
-    }
-
-    function handleFetch(url) {
-      return fetch(url)
+    const handleFetch = async (category) => {
+      return fetch(getCategoryUrl(category))
         .then((response) => response.json())
         .then((jsonData) => {
-          //Hier Daten aufbereiten
           return {
-            category: getCategoryByUrl(url),
+            category,
+            categoryLabel: categoryLabels?.get(category),
             questions: jsonData.questions,
           };
         });
+    };
+
+    const apiFetches = [
+      handleFetch("basics-html-css"),
+      handleFetch("advanced-html-css"),
+      handleFetch("basics-js"),
+      handleFetch("first-js-web-app"),
+      handleFetch("terminal-and-shell"),
+    ];
+
+    function getCategoryUrl(category) {
+      return (
+        "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/" +
+        category +
+        ".json"
+      );
     }
+
+    // function getCategoryByUrl(url) {
+    //   return url
+    //     .replace(
+    //       "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/",
+    //       ""
+    //     )
+    //     .replace(".json", "")
+    //     .split("-")
+    //     .join(" ");
+    // }
 
     Promise.all(apiFetches).then((result) => {
       this.quizData = result;

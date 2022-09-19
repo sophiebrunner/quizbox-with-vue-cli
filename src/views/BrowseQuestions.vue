@@ -9,16 +9,15 @@
       scopedData.option.category
     }}</template>
   </SelectOption>
-  {{ selectedCategory }}
   <BaseHeader
     :headline="text.headline"
-    :description="quizData.length.toString()"
+    :description="numberOfQuestionsFromSelectedCategory"
     ><template v-slot:headline
       ><h3>{{ text.headline }}</h3></template
     ></BaseHeader
   >
   <!-- Wie Liste conditional rendern? v-if? Welche Logik? Event in SelectOption abfangen? -->
-  <BaseList :list-items="QuestionsFromSelectedCategory"
+  <BaseList :list-items="questionsFromSelectedCategory"
     ><template #list-item="scopedData">{{ scopedData.item }} </template>
   </BaseList>
 </template>
@@ -46,10 +45,13 @@ export default {
     allQuestions() {
       return this.quizData.flatMap((data) => data.questions);
     },
-    QuestionsFromSelectedCategory() {
+    questionsFromSelectedCategory() {
       return this.quizData.find(
         (categoryItem) => categoryItem.category === this.selectedCategory
       )?.questions;
+    },
+    numberOfQuestionsFromSelectedCategory() {
+      return this.questionsFromSelectedCategory?.length.toString();
     },
   },
   methods: {
@@ -77,7 +79,7 @@ export default {
     ];
 
     function getCategoryByUrl(url) {
-      return url
+      const categoryByUrl = url
         .replace(
           "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/",
           ""
@@ -85,6 +87,13 @@ export default {
         .replace(".json", "")
         .split("-")
         .join(" ");
+      const categoryWithUpperCases = categoryByUrl
+        .split(" ")
+        .map(function (word) {
+          return word.charAt(0).toUpperCase() + word.slice(1);
+        })
+        .join(" ");
+      return categoryWithUpperCases;
     }
 
     function handleFetch(url) {

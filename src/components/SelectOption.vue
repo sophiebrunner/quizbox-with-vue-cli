@@ -21,9 +21,6 @@ export default {
     },
     selectOptions: {
       type: Array,
-      default: () => [
-        { data: "Here comes the questions", category: "Category" },
-      ],
     },
   },
   emits: ["change"],

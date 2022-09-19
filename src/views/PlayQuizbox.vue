@@ -1,21 +1,13 @@
-// Projekt-Setup: Kann ich über Slots in BaseList Checkbox und Fragenanzahl in
-PlayQuizbox einspeisen? // // Wie Daten organisieren? Fetch funktioniert nicht?
-Daten in beiden Views notwendig? Wie mit Ids etc. umgehen? //// Konzentration
-auf BrowseQuestions // // Quizbox-Session: wo aufrufen/anzeigen? Wie auf click
-neue Frage einspeisen? Quizbox-Session bekommt Fragenkatalog übergeben (Array an
-Fragen für Session) // // Debug scoped-slot in SelectOption in BrowseQuestions
-// //Weitere view für Quizbox-Session //Vorgehen: erstmal weniger Komponenten,
-wenn Duplikate, dann in Komponenten auslagern
 <template>
+  <BaseHeader :headline="action" />
   <SelectOption
-    :action="action"
     :description="questionAreas.description"
     :select-options="numberOfQuestions"
-  ></SelectOption>
-  <BaseList
-    :headline="questionAreas.headline"
-    :numberOfItems="numberOfQuestions.length"
-  ></BaseList>
+    @change="onNumberOfQuestionsSelect"
+  >
+    <template #select-option="scopedData">{{ scopedData.option }}</template>
+  </SelectOption>
+  <BaseList :numberOfItems="numberOfQuestions.length"></BaseList>
   <BaseButton></BaseButton>
 </template>
 
@@ -23,20 +15,81 @@ wenn Duplikate, dann in Komponenten auslagern
 import SelectOption from "@/components/SelectOption.vue";
 import BaseList from "@/components/BaseList.vue";
 import BaseButton from "@/components/BaseButton.vue";
+import BaseHeader from "@/components/BaseHeader.vue";
 
 export default {
   name: "PlayQuizbox",
-  components: { SelectOption, BaseButton, BaseList },
+  components: { SelectOption, BaseButton, BaseList, BaseHeader },
   data() {
     return {
       action: "Play Quizbox",
       numberOfQuestions: [10, 20, 30],
+      chosenNumber: 10,
       questionAreas: {
         headline: "Question Areas",
         description: "Quiz time - test what you know",
       },
-      data: [],
+      quizData: [],
     };
+  },
+  methods: {
+    onNumberOfQuestionsSelect(value) {
+      this.chosenNumber = value;
+      console.log(this.chosenNumber);
+    },
+  },
+  created() {
+    const apiFetches = [
+      handleFetch(
+        "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/basics-html-css.json"
+      ),
+      handleFetch(
+        "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/advanced-html-css.json"
+      ),
+      handleFetch(
+        "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/basics-js.json"
+      ),
+      handleFetch(
+        "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/first-js-web-app.json"
+      ),
+      handleFetch(
+        "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/terminal-and-shell.json"
+      ),
+    ];
+
+    function getCategoryByUrl(url) {
+      const categoryByUrl = url
+        .replace(
+          "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/",
+          ""
+        )
+        .replace(".json", "")
+        .split("-")
+        .join(" ");
+      const categoryWithUpperCases = categoryByUrl
+        .split(" ")
+        .map(function (word) {
+          return word.charAt(0).toUpperCase() + word.slice(1);
+        })
+        .join(" ");
+      return categoryWithUpperCases;
+    }
+
+    function handleFetch(url) {
+      return fetch(url)
+        .then((response) => response.json())
+        .then((jsonData) => {
+          //Hier Daten aufbereiten
+          return {
+            category: getCategoryByUrl(url),
+            questions: jsonData.questions,
+          };
+        });
+    }
+
+    Promise.all(apiFetches).then((result) => {
+      this.quizData = result;
+    });
   },
 };
 </script>

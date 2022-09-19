@@ -1,5 +1,5 @@
 <template>
-  <BaseHeader :headline="text.action"></BaseHeader>
+  <BaseHeader :headline="text.action" />
   <SelectOption
     :description="text.description"
     :select-options="quizData"

@@ -3,13 +3,13 @@
   <p>{{ numberOfItems }}</p>
   <ul>
     <li v-for="item in listItems" :key="item.category">
-      <slot :item="item" name="list-item">{{ item.data }}</slot>
+      <slot :item="item" name="list-item" :description="description">{{
+        item.data
+      }}</slot>
     </li>
   </ul>
 </template>
 
-//optionale property description (abfangen und ggf. ausgeben) //numberOfItems
-später als computed property (.length)
 <script>
 export default {
   name: "BaseList",

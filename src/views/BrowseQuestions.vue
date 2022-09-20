@@ -1,7 +1,7 @@
 <template>
-  <BaseHeader :headline="text.action" />
+  <BaseHeader :headline="textForPageHeader.headline" />
   <BaseSelect
-    :description="text.description"
+    :description="textForPageHeader.description"
     :select-options="quizData"
     @change="onCategorySelect"
   >
@@ -10,35 +10,36 @@
     }}</template>
   </BaseSelect>
   <BaseHeader
-    :headline="text.headline"
+    :headline="textForMainContent.headline"
     :description="numberOfQuestionsFromSelectedCategory"
     ><template v-slot:headline
-      ><h3>{{ text.headline }}</h3></template
+      ><h3>{{ textForMainContent.headline }}</h3></template
     ></BaseHeader
   >
-  <!-- Wie Liste conditional rendern? v-if? Welche Logik? Event in SelectOption abfangen? -->
   <BaseList :list-items="questionsFromSelectedCategory"
     ><template #list-item="scopedData">{{ scopedData.item }} </template>
   </BaseList>
 </template>
 
 <script>
+import BaseHeader from "@/components/BaseHeader.vue";
 import BaseSelect from "@/components/BaseSelect.vue";
 import BaseList from "@/components/BaseList.vue";
-import BaseHeader from "@/components/BaseHeader.vue";
 
 export default {
   name: "BrowseQuestions",
-  components: { BaseSelect, BaseList, BaseHeader },
+  components: { BaseHeader, BaseSelect, BaseList },
   data() {
     return {
-      text: {
-        action: "Browse Questions",
+      textForPageHeader: {
+        headline: "Browse Questions",
         description: "Choose a category with questions",
+      },
+      textForMainContent: {
         headline: "Questions from the chapter",
       },
       quizData: [],
-      selectedCategory: "",
+      selectedCategory: "basics-html-css",
     };
   },
   computed: {
@@ -57,6 +58,7 @@ export default {
   methods: {
     onCategorySelect(value) {
       this.selectedCategory = value;
+      console.log(this.selectedCategory);
     },
   },
   created() {
@@ -96,17 +98,6 @@ export default {
         ".json"
       );
     }
-
-    // function getCategoryByUrl(url) {
-    //   return url
-    //     .replace(
-    //       "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/",
-    //       ""
-    //     )
-    //     .replace(".json", "")
-    //     .split("-")
-    //     .join(" ");
-    // }
 
     Promise.all(apiFetches).then((result) => {
       this.quizData = result;

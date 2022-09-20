@@ -1,35 +1,57 @@
 <template>
-  <BaseHeader :headline="action" />
+  <BaseHeader :headline="textForPageHeader.headline" />
   <BaseSelect
-    :description="questionAreas.description"
-    :select-options="numberOfQuestions"
-    @change="onNumberOfQuestionsSelect"
+    :description="textForPageHeader.description"
+    :select-options="nrOfQuestions"
+    @change="onNrOfQuestionsSelect"
   >
-    <template #select-option="scopedData">{{ scopedData.option }}</template>
+    <template #select-option="scopedData">{{
+      scopedData.option + " Questions"
+    }}</template>
   </BaseSelect>
-  <BaseList :numberOfItems="numberOfQuestions.length"></BaseList>
-  <BaseButton></BaseButton>
+  <BaseHeader
+    :headline="textForMainContent.headline"
+    :description="'0' + this.quizData.length"
+    ><template v-slot:headline
+      ><h3>{{ textForMainContent.headline }}</h3></template
+    ></BaseHeader
+  >
+  <BaseList :list-items="quizData"
+    ><template #list-item="scopedData"
+      ><input type="checkbox" id="scopedData.item.category" />
+      <label for="scopedData.item.category"
+        ><span>{{ scopedData.item.categoryLabel }}</span> -
+        <span>{{
+          scopedData.item.questions.length + " Questions"
+        }}</span></label
+      >
+    </template>
+  </BaseList>
+  <BaseButton :buttonTxt="buttonTxt"></BaseButton>
 </template>
 
 <script>
+import BaseHeader from "@/components/BaseHeader.vue";
 import BaseSelect from "@/components/BaseSelect.vue";
 import BaseList from "@/components/BaseList.vue";
 import BaseButton from "@/components/BaseButton.vue";
-import BaseHeader from "@/components/BaseHeader.vue";
 
 export default {
   name: "PlayQuizbox",
-  components: { BaseSelect, BaseButton, BaseList, BaseHeader },
+  components: { BaseHeader, BaseSelect, BaseList, BaseButton },
   data() {
     return {
-      action: "Play Quizbox",
-      numberOfQuestions: [10, 20, 30],
-      chosenNumber: 10,
-      questionAreas: {
-        headline: "Question Areas",
+      textForPageHeader: {
+        headline: "Play Quizbox",
         description: "Quiz time - test what you know",
       },
+      textForMainContent: {
+        headline: "Question Areas",
+      },
+      nrOfQuestions: [10, 20, 30],
+      chosenNr: 10,
       quizData: [],
+      buttonTxt: "Start Quizbox",
     };
   },
   computed: {
@@ -46,9 +68,9 @@ export default {
     },
   },
   methods: {
-    onNumberOfQuestionsSelect(value) {
-      this.chosenNumber = value;
-      console.log(this.chosenNumber);
+    onNrOfQuestionsSelect(value) {
+      this.chosenNr = value;
+      console.log(this.chosenNr);
     },
   },
   created() {
@@ -59,7 +81,8 @@ export default {
       ["first-js-web-app", "Web Apps Foundation"],
       ["terminal-and-shell", "Terminal and Shell"],
     ]);
-    // const categories = categoryLabels.keys();
+    const categories = categoryLabels.keys();
+    console.log(categories);
 
     const handleFetch = async (category) => {
       return fetch(getCategoryUrl(category))
@@ -88,17 +111,6 @@ export default {
         ".json"
       );
     }
-
-    // function getCategoryByUrl(url) {
-    //   return url
-    //     .replace(
-    //       "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/",
-    //       ""
-    //     )
-    //     .replace(".json", "")
-    //     .split("-")
-    //     .join(" ");
-    // }
 
     Promise.all(apiFetches).then((result) => {
       this.quizData = result;

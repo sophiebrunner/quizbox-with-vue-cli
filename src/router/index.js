@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import PlayQuizbox from "@/views/PlayQuizbox.vue";
+import BrowseQuestions from "@/views/BrowseQuestions.vue";
 
 const routes = [
   {
@@ -10,11 +11,7 @@ const routes = [
   {
     path: "/browse-questions",
     name: "questions",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "@/views/BrowseQuestions.vue"),
+    component: BrowseQuestions,
   },
 ];
 

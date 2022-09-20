@@ -9,7 +9,7 @@
 import BaseButton from "@/components/BaseButton.vue";
 
 export default {
-  name: "QuizboxSession",
+  name: "BaseQuestion",
   components: { BaseButton },
 };
 </script>

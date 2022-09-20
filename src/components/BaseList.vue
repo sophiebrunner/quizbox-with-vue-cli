@@ -1,13 +1,29 @@
 <template>
-  <h3>BaseList</h3>
-  <p>Description</p>
+  <slot />
+  <p>{{ numberOfItems }}</p>
   <ul>
-    <li><slot></slot>Item 1<slot></slot></li>
+    <li v-for="item in listItems" :key="item.category">
+      <slot :item="item" name="list-item" :description="description">{{
+        item.data
+      }}</slot>
+    </li>
   </ul>
 </template>
 
 <script>
 export default {
   name: "BaseList",
+  props: {
+    numberOfItems: {
+      type: Number,
+    },
+    listItems: {
+      type: Array,
+    },
+    description: {
+      type: String,
+      required: false,
+    },
+  },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <BaseHeader :headline="text.action" />
-  <SelectOption
+  <BaseSelect
     :description="text.description"
     :select-options="quizData"
     @change="onCategorySelect"
@@ -8,7 +8,7 @@
     <template #select-option="scopedData">{{
       scopedData.option.categoryLabel
     }}</template>
-  </SelectOption>
+  </BaseSelect>
   <BaseHeader
     :headline="text.headline"
     :description="numberOfQuestionsFromSelectedCategory"
@@ -23,13 +23,13 @@
 </template>
 
 <script>
-import SelectOption from "@/components/SelectOption.vue";
+import BaseSelect from "@/components/BaseSelect.vue";
 import BaseList from "@/components/BaseList.vue";
 import BaseHeader from "@/components/BaseHeader.vue";
 
 export default {
   name: "BrowseQuestions",
-  components: { SelectOption, BaseList, BaseHeader },
+  components: { BaseSelect, BaseList, BaseHeader },
   data() {
     return {
       text: {

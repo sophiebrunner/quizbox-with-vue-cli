@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: "SelectOption",
+  name: "BaseSelect",
   props: {
     description: {
       type: String,

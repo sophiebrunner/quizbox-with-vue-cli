@@ -1,25 +1,25 @@
 <template>
   <BaseHeader :headline="action" />
-  <SelectOption
+  <BaseSelect
     :description="questionAreas.description"
     :select-options="numberOfQuestions"
     @change="onNumberOfQuestionsSelect"
   >
     <template #select-option="scopedData">{{ scopedData.option }}</template>
-  </SelectOption>
+  </BaseSelect>
   <BaseList :numberOfItems="numberOfQuestions.length"></BaseList>
   <BaseButton></BaseButton>
 </template>
 
 <script>
-import SelectOption from "@/components/SelectOption.vue";
+import BaseSelect from "@/components/BaseSelect.vue";
 import BaseList from "@/components/BaseList.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import BaseHeader from "@/components/BaseHeader.vue";
 
 export default {
   name: "PlayQuizbox",
-  components: { SelectOption, BaseButton, BaseList, BaseHeader },
+  components: { BaseSelect, BaseButton, BaseList, BaseHeader },
   data() {
     return {
       action: "Play Quizbox",

@@ -1,6 +1,4 @@
 <template>
-  <h2>Quizbox Session</h2>
-  <p>Questions left</p>
   <p>I'm a question</p>
   <BaseButton></BaseButton>
 </template>

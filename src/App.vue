@@ -2,7 +2,8 @@
   <h1>Quizbox</h1>
   <nav>
     <router-link :to="{ name: 'quizbox' }">Play Quizbox</router-link> |
-    <router-link :to="{ name: 'questions' }">Browse Questions</router-link>
+    <router-link :to="{ name: 'questions' }">Browse Questions</router-link> |
+    <router-link :to="{ name: 'session' }">Start Quizbox</router-link>
   </nav>
   <router-view />
 </template>

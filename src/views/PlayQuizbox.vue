@@ -27,7 +27,7 @@
       >
     </template>
   </BaseList>
-  <BaseButton :buttonTxt="buttonTxt"></BaseButton>
+  <BaseButton :btnTxt="btnTxt"></BaseButton>
 </template>
 
 <script>
@@ -51,7 +51,7 @@ export default {
       nrOfQuestions: [10, 20, 30],
       chosenNr: 10,
       quizData: [],
-      buttonTxt: "Start Quizbox",
+      btnTxt: "Start Quizbox",
     };
   },
   computed: {

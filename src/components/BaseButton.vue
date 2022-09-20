@@ -1,15 +1,16 @@
 <template>
-  <button>{{ buttonTxt }}</button>
+  <button @click="$emit('click')">{{ btnTxt }}</button>
 </template>
 
 <script>
 export default {
   name: "BaseButton",
   props: {
-    buttonTxt: {
+    btnTxt: {
       type: String,
       required: true,
     },
   },
+  emits: ["click"],
 };
 </script>

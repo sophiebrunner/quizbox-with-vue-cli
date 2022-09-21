@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import PlayQuizbox from "@/views/PlayQuizbox.vue";
 import BrowseQuestions from "@/views/BrowseQuestions.vue";
+import QuizboxSession from "@/views/QuizboxSession.vue";
 
 const routes = [
   {
@@ -12,6 +13,11 @@ const routes = [
     path: "/browse-questions",
     name: "questions",
     component: BrowseQuestions,
+  },
+  {
+    path: "/quizbox-session",
+    name: "session",
+    component: QuizboxSession,
   },
 ];
 

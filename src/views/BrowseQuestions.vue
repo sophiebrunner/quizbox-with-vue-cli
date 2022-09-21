@@ -39,7 +39,7 @@ export default {
         headline: "Questions from the chapter",
       },
       quizData: [],
-      selectedCategory: "basics-html-css",
+      selectedCategory: "",
     };
   },
   computed: {
@@ -61,7 +61,7 @@ export default {
       console.log(this.selectedCategory);
     },
   },
-  created() {
+  async created() {
     const categoryLabels = new Map([
       ["basics-html-css", "Web Dev Foundation"],
       ["advanced-html-css", "Advanced HTML"],
@@ -69,7 +69,8 @@ export default {
       ["first-js-web-app", "Web Apps Foundation"],
       ["terminal-and-shell", "Terminal and Shell"],
     ]);
-    // const categories = categoryLabels.keys();
+    const categories = [...categoryLabels.keys()];
+    console.log(categories);
 
     const handleFetch = async (category) => {
       return fetch(getCategoryUrl(category))
@@ -99,7 +100,7 @@ export default {
       );
     }
 
-    Promise.all(apiFetches).then((result) => {
+    return Promise.all(apiFetches).then((result) => {
       this.quizData = result;
     });
   },

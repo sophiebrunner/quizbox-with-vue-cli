@@ -25,17 +25,19 @@
         v-model="selectedCategories"
       />
       <label :for="scopedData.item.category"
-        >{{ selectedCategories
-        }}<span>{{ scopedData.item.categoryLabel }}</span> -
-        <span>{{ scopedData.item.questions.length + " Questions" }}</span
-        >{{ arrayWithQuestionsFromSelectedCategories }}</label
+        ><span>{{ scopedData.item.categoryLabel }}</span> -
+        <span>{{
+          scopedData.item.questions.length + " Questions"
+        }}</span></label
       >
     </template>
   </BaseList>
-  <BaseButton :btnTxt="btnTxt"></BaseButton>
+  <BaseButton :btnTxt="btnTxt" @click="onStartQuizboxSession"></BaseButton>
 </template>
 
 <script>
+import { store } from "@/main";
+
 import BaseHeader from "@/components/BaseHeader.vue";
 import BaseSelect from "@/components/BaseSelect.vue";
 import BaseList from "@/components/BaseList.vue";
@@ -46,6 +48,7 @@ export default {
   components: { BaseHeader, BaseSelect, BaseList, BaseButton },
   data() {
     return {
+      store,
       textForPageHeader: {
         headline: "Play Quizbox",
         description: "Quiz time - test what you know",
@@ -56,79 +59,25 @@ export default {
       nrOfQuestions: [10, 20, 30],
       chosenNr: null,
       selectedCategories: [],
-      quizData: [],
+      quizData: store.quizData,
       btnTxt: "Start Quizbox",
     };
-  },
-  computed: {
-    // allQuestions() {
-    //   return this.quizData.flatMap((data) => data.questions);
-    // },
-    // questionsFromSelectedCategory() {
-    //   return this.quizData.find(
-    //     (categoryItem) => categoryItem.category === this.selectedCategory
-    //   )?.questions;
-    // },
-    // numberOfQuestionsFromSelectedCategory() {
-    //   return this.questionsFromSelectedCategory?.length.toString();
-    // },
-    arrayWithQuestionsFromSelectedCategories() {
-      return "Test";
-      // selectedCategories-value aus checkboxen
-      // chosenNr aus selectinput
-    },
   },
   methods: {
     onNrOfQuestionsSelect(value) {
       this.chosenNr = value;
+    },
+    onStartQuizboxSession() {
+      console.log(this.selectedCategories);
       console.log(this.chosenNr);
     },
   },
   mounted() {
     this.$root.selectedQuizCategories = this.selectedCategories;
   },
-  // v-model für boxes; change-event oder watcher für checkbox
-  // data property für gewählte category
   created() {
-    const categoryLabels = new Map([
-      ["basics-html-css", "Web Dev Foundation"],
-      ["advanced-html-css", "Advanced HTML"],
-      ["basics-js", "Coding Foundation"],
-      ["first-js-web-app", "Web Apps Foundation"],
-      ["terminal-and-shell", "Terminal and Shell"],
-    ]);
-
-    const handleFetch = async (category) => {
-      return fetch(getCategoryUrl(category))
-        .then((response) => response.json())
-        .then((jsonData) => {
-          return {
-            category,
-            categoryLabel: categoryLabels?.get(category),
-            questions: jsonData.questions,
-          };
-        });
-    };
-
-    const apiFetches = [
-      handleFetch("basics-html-css"),
-      handleFetch("advanced-html-css"),
-      handleFetch("basics-js"),
-      handleFetch("first-js-web-app"),
-      handleFetch("terminal-and-shell"),
-    ];
-
-    function getCategoryUrl(category) {
-      return (
-        "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/" +
-        category +
-        ".json"
-      );
-    }
-
-    Promise.all(apiFetches).then((result) => {
-      this.quizData = result;
-    });
+    store.fetchDataFromApi();
+    this.quizData = store.quizData;
   },
 };
 </script>

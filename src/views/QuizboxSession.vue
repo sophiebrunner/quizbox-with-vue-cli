@@ -3,7 +3,8 @@
     :headline="textForPageHeader.headline"
     :description="textForPageHeader.description"
   ></BaseHeader>
-  <p>{{ question }}</p>
+  <p>{{ currentQuestion }}</p>
+  {{ selectedCategories }}
   <BaseButton :btnTxt="btnTxt" @click="navigateThroughSession" />
 </template>
 
@@ -30,32 +31,23 @@ export default {
         "What is the flex-shrink property?",
         "What is the flex-basis property?",
       ],
-      question: "Initial question",
+      currentQuestionIndex: 0,
     };
   },
   computed: {
-    // currentQuestion() {
-    //   //   return this.arrayWithQuestions.forEach(
-    //   //     (question) => (this.question = question)
-    //   //   );
-    // },
+    currentQuestion() {
+      return this.arrayWithQuestions[this.currentQuestionIndex];
+    },
     btnTxt() {
       return "Next";
+    },
+    selectedCategories() {
+      return this.$root.selectedQuizCategories;
     },
   },
   methods: {
     navigateThroughSession() {
-      for (const question of this.arrayWithQuestions) {
-        return (this.question = question);
-      }
-      // navigateThroughSession() {
-      //   this.question = this.arrayWithQuestions[0];
-      //   for (let i = 0; i < this.arrayWithQuestions.length; i++) {
-      //     this.question = this.arrayWithQuestions[i];
-      //     i++;
-      //   }
-      //   console.log(this.question);
-      //   return this.question;
+      this.currentQuestionIndex++;
     },
   },
 };

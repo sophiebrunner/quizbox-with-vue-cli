@@ -8,6 +8,16 @@
   <router-view />
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      selectedQuizCategories: ["basics-html-css", "terminal-and-shell"],
+    };
+  },
+};
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

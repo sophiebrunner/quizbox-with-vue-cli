@@ -4,11 +4,12 @@
     :description="textForPageHeader.description"
   ></BaseHeader>
   <p>{{ currentQuestion }}</p>
-  {{ selectedCategories }}
   <BaseButton :btnTxt="btnTxt" @click="navigateThroughSession" />
 </template>
 
 <script>
+import { store } from "@/main";
+
 import BaseHeader from "@/components/BaseHeader.vue";
 import BaseButton from "@/components/BaseButton.vue";
 
@@ -22,8 +23,11 @@ export default {
     return {
       textForPageHeader: {
         headline: "Quizbox Session",
+        /* 👩🏻‍💻 Feature: description wird zu computed property, das aktuellen index im array anzeigt; 
+        wenn array durch ist, Text anzeigen "Session finished" */
         description: "Question count 01/30",
       },
+      /* Hier arrayWithQuestions einbinden, der in PlayQuizbox.vue generiert wurde */
       arrayWithQuestions: [
         "What is the purpose of the flex-direction property?",
         "What is a flexbox?",
@@ -32,17 +36,20 @@ export default {
         "What is the flex-basis property?",
       ],
       currentQuestionIndex: 0,
+      selectedCategories: store.selectedCategories,
     };
   },
   computed: {
     currentQuestion() {
       return this.arrayWithQuestions[this.currentQuestionIndex];
+      /* 👩🏻‍💻 Feature: 
+      currentQuestion wird zu "Congratulations! You finished..." wenn array durchgelaufen ist */
     },
     btnTxt() {
       return "Next";
-    },
-    selectedCategories() {
-      return this.$root.selectedQuizCategories;
+      /* 👩🏻‍💻 Feature: 
+      btnTxt ändert sich je nach Stelle im array; wenn fertig "Finish" anzeigen
+      Condirional operator? */
     },
   },
   methods: {

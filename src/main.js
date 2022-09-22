@@ -5,9 +5,10 @@ import App from "./App.vue";
 import router from "./router";
 
 export const store = reactive({
-  count: 0,
   quizData: [],
-  fetchDataFromApi() {
+  selectedCategories: [],
+
+  async fetchDataFromApi() {
     const categoryLabels = new Map([
       ["basics-html-css", "Web Dev Foundation"],
       ["advanced-html-css", "Advanced HTML"],
@@ -15,8 +16,10 @@ export const store = reactive({
       ["first-js-web-app", "Web Apps Foundation"],
       ["terminal-and-shell", "Terminal and Shell"],
     ]);
+
     const categories = [...categoryLabels.keys()];
     console.log(categories);
+
     const handleFetch = async (category) => {
       return fetch(getCategoryUrl(category))
         .then((response) => response.json())
@@ -28,6 +31,14 @@ export const store = reactive({
           };
         });
     };
+
+    /* 🔄 Refactoring: 
+    const apiFetches = categories.forEach((category) => {
+      handleFetch(category);
+    });
+    🐞 Debug: apiFetches gibt undefined zurück
+*/
+
     const apiFetches = [
       handleFetch("basics-html-css"),
       handleFetch("advanced-html-css"),
@@ -35,6 +46,7 @@ export const store = reactive({
       handleFetch("first-js-web-app"),
       handleFetch("terminal-and-shell"),
     ];
+
     function getCategoryUrl(category) {
       return (
         "https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/" +
@@ -42,6 +54,7 @@ export const store = reactive({
         ".json"
       );
     }
+
     Promise.all(apiFetches).then((result) => {
       this.quizData = result;
     });

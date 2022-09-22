@@ -58,7 +58,7 @@ export default {
       },
       nrOfQuestions: [10, 20, 30],
       chosenNr: null,
-      selectedCategories: [],
+      selectedCategories: store.selectedCategories,
       quizData: store.quizData,
       btnTxt: "Start Quizbox",
     };
@@ -70,14 +70,25 @@ export default {
     onStartQuizboxSession() {
       console.log(this.selectedCategories);
       console.log(this.chosenNr);
+      /*👩🏻‍💻 Feature: Hier arrayWithQuestions generieren, 
+      der in QuizboxSession reingereicht wird - aber wie❔
+      Requirement: Anzahl Fragen UND 1 oder mehrere Kategorien;
+      wenn mehrere Kategorien ausgewählt => gleiche Zahl an Fragen aus 
+      ausgewählten Kategorien zusammenstellen  
+
+      Step 1: Array mit Fragen aus einer Kategorie
+      Step 2: Array mit Fragen aus mehreren Kategorien
+              condition mehr als eine Kategorie ausgewählt: if(selectedCategories.length > 1) { }
+              condition gerade/ungerade Zahl an Kategorien: if((chosenNr % selectedCategories.length) % 2 == 0) { }
+              Wenn gerade: übergebe Array jeweils chosenNr % selectedCategories.length-questions aus jeder ausgewählten Kategorie
+              Wenn ungerade: 20 Fragen 3 Kategorien = 6, 7, 7 // 10 Fragen, 3 Kategorien = 3, 3, 4 => Wie abbilden?
+      */
     },
   },
   mounted() {
-    this.$root.selectedQuizCategories = this.selectedCategories;
-  },
-  created() {
     store.fetchDataFromApi();
     this.quizData = store.quizData;
+    this.selectedCategories = store.selectedCategories;
   },
 };
 </script>

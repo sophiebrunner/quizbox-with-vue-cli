@@ -32,7 +32,6 @@ export default {
   emits: ["change"],
   mounted() {
     this.$emit("change", this.$refs.select.value);
-    console.log("Hallo ", this.$refs.select.value);
   },
 };
 </script>

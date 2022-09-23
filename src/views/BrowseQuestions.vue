@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { store } from "@/main";
+// import { store } from "@/main";
 
 import BaseHeader from "@/components/BaseHeader.vue";
 import BaseSelect from "@/components/BaseSelect.vue";
@@ -40,11 +40,15 @@ export default {
       textForMainContent: {
         headline: "Questions from the chapter",
       },
-      quizData: store.quizData,
+      // quizData: store.quizData,
       selectedCategory: "",
     };
   },
   computed: {
+    quizData() {
+      return this.$store.state.quizData;
+    },
+    // Neue computed property mit selectOption und in BaseSelect ändern
     questionsFromSelectedCategory() {
       return this.quizData.find(
         (categoryItem) => categoryItem.category === this.selectedCategory
@@ -58,10 +62,6 @@ export default {
     onCategorySelect(value) {
       this.selectedCategory = value;
     },
-  },
-  async created() {
-    store.fetchDataFromApi();
-    this.quizData = store.quizData;
   },
 };
 </script>

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { store } from "@/main";
+// import { store } from "@/main";
 
 import BaseHeader from "@/components/BaseHeader.vue";
 import BaseButton from "@/components/BaseButton.vue";
@@ -36,7 +36,7 @@ export default {
         "What is the flex-basis property?",
       ],
       currentQuestionIndex: 0,
-      selectedCategories: store.selectedCategories,
+      selectedCategories: "",
     };
   },
   computed: {

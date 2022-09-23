@@ -8,12 +8,11 @@
   <router-view />
 </template>
 
+//
 <script>
 export default {
-  data() {
-    return {
-      selectedQuizCategories: ["basics-html-css", "terminal-and-shell"],
-    };
+  created() {
+    this.$store.dispatch("fetchDataFromApi");
   },
 };
 </script>

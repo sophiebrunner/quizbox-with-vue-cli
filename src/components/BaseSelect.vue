@@ -1,6 +1,7 @@
 <template>
   <slot />
   <label for="select-option">{{ description }}</label>
+  <!-- Refactor: gleiche Datenstruktur key, label -->
   <select
     id="select-option"
     @change="$emit('change', $event.target.value)"

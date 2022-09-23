@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { store } from "@/main";
+// import { store } from "@/main";
 
 import BaseHeader from "@/components/BaseHeader.vue";
 import BaseSelect from "@/components/BaseSelect.vue";
@@ -48,7 +48,7 @@ export default {
   components: { BaseHeader, BaseSelect, BaseList, BaseButton },
   data() {
     return {
-      store,
+      // store,
       textForPageHeader: {
         headline: "Play Quizbox",
         description: "Quiz time - test what you know",
@@ -58,14 +58,19 @@ export default {
       },
       nrOfQuestions: [10, 20, 30],
       chosenNr: null,
-      selectedCategories: store.selectedCategories,
-      quizData: store.quizData,
+      selectedCategories: [],
       btnTxt: "Start Quizbox",
     };
+  },
+  computed: {
+    quizData() {
+      return this.$store.state.quizData;
+    },
   },
   methods: {
     onNrOfQuestionsSelect(value) {
       this.chosenNr = value;
+      //Refactor: value nur number
     },
     onStartQuizboxSession() {
       console.log(this.selectedCategories);
@@ -84,11 +89,6 @@ export default {
               Wenn ungerade: 20 Fragen 3 Kategorien = 6, 7, 7 // 10 Fragen, 3 Kategorien = 3, 3, 4 => Wie abbilden?
       */
     },
-  },
-  mounted() {
-    store.fetchDataFromApi();
-    this.quizData = store.quizData;
-    this.selectedCategories = store.selectedCategories;
   },
 };
 </script>

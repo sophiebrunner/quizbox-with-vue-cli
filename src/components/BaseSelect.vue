@@ -7,14 +7,8 @@
     @change="$emit('change', $event.target.value)"
     ref="select"
   >
-    <option
-      v-for="option in selectOptions"
-      :key="option.category"
-      :value="option.category"
-    >
-      <slot :option="option" name="select-option">{{
-        option.categoryLabel
-      }}</slot>
+    <option v-for="option in selectOptions" :key="option.id" :value="option">
+      <slot :option="option" name="select-option">{{ option }}</slot>
     </option>
   </select>
 </template>
@@ -23,6 +17,9 @@
 export default {
   name: "BaseSelect",
   props: {
+    selectOption: {
+      type: String,
+    },
     description: {
       type: String,
     },

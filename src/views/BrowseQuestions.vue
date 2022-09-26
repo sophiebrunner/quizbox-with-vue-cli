@@ -2,12 +2,10 @@
   <BaseHeader :headline="textForPageHeader.headline" />
   <BaseSelect
     :description="textForPageHeader.description"
-    :select-options="quizData"
+    :select-options="quizCategories"
     @change="onCategorySelect"
   >
-    <template #select-option="scopedData">{{
-      scopedData.option.categoryLabel
-    }}</template>
+    <template #select-option="scopedData">{{ scopedData }}</template>
   </BaseSelect>
   <BaseHeader
     :headline="textForMainContent.headline"
@@ -17,13 +15,11 @@
     ></BaseHeader
   >
   <BaseList :list-items="questionsFromSelectedCategory"
-    ><template #list-item="scopedData">{{ scopedData.item }} </template>
+    ><template #list-item="scopedData">{{ scopedData.item }}</template>
   </BaseList>
 </template>
 
 <script>
-// import { store } from "@/main";
-
 import BaseHeader from "@/components/BaseHeader.vue";
 import BaseSelect from "@/components/BaseSelect.vue";
 import BaseList from "@/components/BaseList.vue";
@@ -31,6 +27,7 @@ import BaseList from "@/components/BaseList.vue";
 export default {
   name: "BrowseQuestions",
   components: { BaseHeader, BaseSelect, BaseList },
+
   data() {
     return {
       textForPageHeader: {
@@ -40,15 +37,19 @@ export default {
       textForMainContent: {
         headline: "Questions from the chapter",
       },
-      // quizData: store.quizData,
       selectedCategory: "",
     };
   },
+
   computed: {
     quizData() {
       return this.$store.state.quizData;
     },
-    // Neue computed property mit selectOption und in BaseSelect ändern
+    quizCategories() {
+      return this.quizData.map((entry) => {
+        return [entry.category, entry.categoryLabel];
+      });
+    },
     questionsFromSelectedCategory() {
       return this.quizData.find(
         (categoryItem) => categoryItem.category === this.selectedCategory
@@ -58,6 +59,7 @@ export default {
       return this.questionsFromSelectedCategory?.length.toString();
     },
   },
+
   methods: {
     onCategorySelect(value) {
       this.selectedCategory = value;

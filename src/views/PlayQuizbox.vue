@@ -46,9 +46,9 @@ import BaseButton from "@/components/BaseButton.vue";
 export default {
   name: "PlayQuizbox",
   components: { BaseHeader, BaseSelect, BaseList, BaseButton },
+
   data() {
     return {
-      // store,
       textForPageHeader: {
         headline: "Play Quizbox",
         description: "Quiz time - test what you know",
@@ -62,11 +62,16 @@ export default {
       btnTxt: "Start Quizbox",
     };
   },
+
   computed: {
     quizData() {
       return this.$store.state.quizData;
     },
+    selectOption() {
+      return this.name;
+    },
   },
+
   methods: {
     onNrOfQuestionsSelect(value) {
       this.chosenNr = value;

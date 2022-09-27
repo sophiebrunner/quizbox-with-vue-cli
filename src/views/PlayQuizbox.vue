@@ -6,7 +6,7 @@
     @change="onNrOfQuestionsSelect"
   >
     <template #select-option="scopedData">{{
-      scopedData.option + " Questions"
+      scopedData.option.value + " Questions"
     }}</template>
   </BaseSelect>
   <BaseHeader
@@ -32,12 +32,13 @@
       >
     </template>
   </BaseList>
+  <pre>{{ filteredQuizData }}</pre>
+  <pre>{{ questionsFromFilteredquizData }}</pre>
+  <pre>{{ randomlyGeneratedQuestions }}</pre>
   <BaseButton :btnTxt="btnTxt" @click="onStartQuizboxSession"></BaseButton>
 </template>
 
 <script>
-// import { store } from "@/main";
-
 import BaseHeader from "@/components/BaseHeader.vue";
 import BaseSelect from "@/components/BaseSelect.vue";
 import BaseList from "@/components/BaseList.vue";
@@ -56,10 +57,19 @@ export default {
       textForMainContent: {
         headline: "Question Areas",
       },
-      nrOfQuestions: [10, 20, 30],
+      nrOfQuestions: [
+        { value: 10 },
+        { value: 20 },
+        {
+          value: 30,
+        },
+      ],
       chosenNr: null,
       selectedCategories: [],
       btnTxt: "Start Quizbox",
+      filteredQuizData: [],
+      questionsFromFilteredquizData: [],
+      randomlyGeneratedQuestions: [],
     };
   },
 
@@ -75,18 +85,42 @@ export default {
   methods: {
     onNrOfQuestionsSelect(value) {
       this.chosenNr = value;
-      //Refactor: value nur number
     },
     onStartQuizboxSession() {
-      console.log(this.selectedCategories);
-      console.log(this.chosenNr);
-      /*👩🏻‍💻 Feature: Hier arrayWithQuestions generieren, 
-      der in QuizboxSession reingereicht wird - aber wie❔
-      Requirement: Anzahl Fragen UND 1 oder mehrere Kategorien;
-      wenn mehrere Kategorien ausgewählt => gleiche Zahl an Fragen aus 
-      ausgewählten Kategorien zusammenstellen  
+      const testCategory = "basics-html-css";
 
-      Step 1: Array mit Fragen aus einer Kategorie
+      console.log(this.quizData);
+      this.filteredQuizData = this.quizData.filter((item) => {
+        console.log(item.category, testCategory);
+        console.log(item.category === testCategory);
+        return item.category === testCategory;
+      });
+
+      // this.questionsFromFilteredquizData = this.filteredQuizData.forEach(
+      //   (el) => {
+      //     return el.questions;
+      //   }
+      // );
+
+      this.questionsFromFilteredquizData = this.filteredQuizData[0].questions;
+
+      function getRandomQuestions(arr, num) {
+        const shuffledArray = [...arr].sort(() => 0.5 - Math.random());
+
+        return shuffledArray.slice(0, num);
+      }
+
+      this.randomlyGeneratedQuestions = getRandomQuestions(
+        this.questionsFromFilteredquizData,
+        this.chosenNr
+      );
+
+      /*👩🏻‍💻 Feature: 
+      Requirement: Anzahl Fragen UND 1 oder mehrere Kategorien;
+      wenn mehrere Kategorien ausgewählt => gleiche Zahl an Fragen aus
+      ausgewählten Kategorien zusammenstellen
+
+      Step 1: Array mit Fragen aus einer Kategorie ✅
       Step 2: Array mit Fragen aus mehreren Kategorien
               condition mehr als eine Kategorie ausgewählt: if(selectedCategories.length > 1) { }
               condition gerade/ungerade Zahl an Kategorien: if((chosenNr % selectedCategories.length) % 2 == 0) { }

@@ -5,7 +5,6 @@
     :select-options="quizCategories"
     @change="onCategorySelect"
   >
-    <template #select-option="scopedData">{{ scopedData }}</template>
   </BaseSelect>
   <BaseHeader
     :headline="textForMainContent.headline"
@@ -47,7 +46,10 @@ export default {
     },
     quizCategories() {
       return this.quizData.map((entry) => {
-        return [entry.category, entry.categoryLabel];
+        return {
+          value: entry.category,
+          label: entry.categoryLabel,
+        };
       });
     },
     questionsFromSelectedCategory() {

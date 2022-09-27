@@ -7,8 +7,12 @@
     @change="$emit('change', $event.target.value)"
     ref="select"
   >
-    <option v-for="option in selectOptions" :key="option.id" :value="option">
-      <slot :option="option" name="select-option">{{ option }}</slot>
+    <option
+      v-for="option in selectOptions"
+      :key="option.id"
+      :value="option.value"
+    >
+      <slot :option="option" name="select-option">{{ option.label }}</slot>
     </option>
   </select>
 </template>

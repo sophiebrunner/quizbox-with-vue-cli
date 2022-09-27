@@ -64,7 +64,7 @@ export default {
           value: 30,
         },
       ],
-      chosenNr: null,
+      chosenNr: 10,
       selectedCategories: [],
       btnTxt: "Start Quizbox",
       filteredQuizData: [],

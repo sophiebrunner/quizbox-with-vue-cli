@@ -8,8 +8,6 @@
 </template>
 
 <script>
-// import { store } from "@/main";
-
 import BaseHeader from "@/components/BaseHeader.vue";
 import BaseButton from "@/components/BaseButton.vue";
 

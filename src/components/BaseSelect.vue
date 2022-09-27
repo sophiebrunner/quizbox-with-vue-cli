@@ -1,12 +1,7 @@
 <template>
   <slot />
   <label for="select-option">{{ description }}</label>
-  <!-- Refactor: gleiche Datenstruktur key, label -->
-  <select
-    id="select-option"
-    @change="$emit('change', $event.target.value)"
-    ref="select"
-  >
+  <select id="select-option" @change="$emit('change', $event.target.value)">
     <option
       v-for="option in selectOptions"
       :key="option.id"
@@ -32,8 +27,5 @@ export default {
     },
   },
   emits: ["change"],
-  mounted() {
-    this.$emit("change", this.$refs.select.value);
-  },
 };
 </script>

@@ -36,7 +36,7 @@ export default {
       textForMainContent: {
         headline: "Questions from the chapter",
       },
-      selectedCategory: "",
+      selectedCategory: "basics-html-css",
     };
   },
 

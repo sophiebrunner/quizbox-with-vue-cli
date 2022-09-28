@@ -3,6 +3,7 @@
     :headline="textForPageHeader.headline"
     :description="textForPageHeader.description"
   ></BaseHeader>
+  <pre>{{ questionsFromSelectedCategories }}</pre>
   <p>{{ currentQuestion }}</p>
   <BaseButton :btnTxt="btnTxt" @click="navigateThroughSession" />
 </template>
@@ -21,7 +22,7 @@ export default {
     return {
       textForPageHeader: {
         headline: "Quizbox Session",
-        /* 👩🏻‍💻 Feature: description wird zu computed property, das aktuellen index im array anzeigt; 
+        /* 👩🏻‍💻 Feature: description wird zu computed property, das aktuellen index im array anzeigt;
         wenn array durch ist, Text anzeigen "Session finished" */
         description: "Question count 01/30",
       },
@@ -34,18 +35,20 @@ export default {
         "What is the flex-basis property?",
       ],
       currentQuestionIndex: 0,
-      selectedCategories: "",
     };
   },
   computed: {
+    questionsFromSelectedCategories() {
+      return this.$store.getters.questionsFromSelectedCategories;
+    },
     currentQuestion() {
       return this.arrayWithQuestions[this.currentQuestionIndex];
-      /* 👩🏻‍💻 Feature: 
+      /* 👩🏻‍💻 Feature:
       currentQuestion wird zu "Congratulations! You finished..." wenn array durchgelaufen ist */
     },
     btnTxt() {
       return "Next";
-      /* 👩🏻‍💻 Feature: 
+      /* 👩🏻‍💻 Feature:
       btnTxt ändert sich je nach Stelle im array; wenn fertig "Finish" anzeigen
       Condirional operator? */
     },

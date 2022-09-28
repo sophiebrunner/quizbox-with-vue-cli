@@ -2,7 +2,7 @@
   <slot />
   <p>{{ numberOfItems }}</p>
   <ul>
-    <li v-for="item in listItems" :key="item.category">
+    <li v-for="item in listItems" :key="item.id">
       <slot :item="item" name="list-item" :description="description">{{
         item.data
       }}</slot>

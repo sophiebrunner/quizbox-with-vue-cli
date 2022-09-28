@@ -21,7 +21,7 @@
       ><input
         type="checkbox"
         :id="scopedData.item.category"
-        :value="scopedData.item.categoryLabel"
+        :value="scopedData.item.category"
         v-model="selectedCategories"
       />
       <label :for="scopedData.item.category"
@@ -32,8 +32,6 @@
       >
     </template>
   </BaseList>
-  <pre>{{ filteredQuizData }}</pre>
-  <pre>{{ questionsFromFilteredquizData }}</pre>
   <pre>{{ randomlyGeneratedQuestions }}</pre>
   <BaseButton :btnTxt="btnTxt" @click="onStartQuizboxSession"></BaseButton>
 </template>
@@ -87,44 +85,45 @@ export default {
       this.chosenNr = value;
     },
     onStartQuizboxSession() {
-      const testCategory = "basics-html-css";
+      this.filteredQuizData = this.quizData.filter((item) =>
+        this.selectedCategories.includes(item.category)
+      );
 
-      console.log(this.quizData);
-      this.filteredQuizData = this.quizData.filter((item) => {
-        console.log(item.category, testCategory);
-        console.log(item.category === testCategory);
-        return item.category === testCategory;
+      this.questionsFromFilteredquizData = this.filteredQuizData.map((el) => {
+        return el.questions;
       });
-
-      // this.questionsFromFilteredquizData = this.filteredQuizData.forEach(
-      //   (el) => {
-      //     return el.questions;
-      //   }
-      // );
-
-      this.questionsFromFilteredquizData = this.filteredQuizData[0].questions;
 
       function getRandomQuestions(arr, num) {
         const shuffledArray = [...arr].sort(() => 0.5 - Math.random());
-
         return shuffledArray.slice(0, num);
       }
 
-      this.randomlyGeneratedQuestions = getRandomQuestions(
-        this.questionsFromFilteredquizData,
-        this.chosenNr
-      );
+      if ((this.chosenNr % this.selectedCategories.length) % 2 == 0) {
+        this.randomlyGeneratedQuestions =
+          this.questionsFromFilteredquizData.map((arrEl) => {
+            return getRandomQuestions(
+              arrEl,
+              this.chosenNr / this.questionsFromFilteredquizData.length
+            );
+          });
 
-      /*👩🏻‍💻 Feature: 
+        this.randomlyGeneratedQuestions =
+          this.randomlyGeneratedQuestions.flatMap((el) => el);
+
+        this.randomlyGeneratedQuestions = [
+          ...this.randomlyGeneratedQuestions,
+        ].sort(() => 0.5 - Math.random());
+      } else {
+        console.log("odd");
+      }
+      /*👩🏻‍💻 Feature:
       Requirement: Anzahl Fragen UND 1 oder mehrere Kategorien;
       wenn mehrere Kategorien ausgewählt => gleiche Zahl an Fragen aus
       ausgewählten Kategorien zusammenstellen
 
       Step 1: Array mit Fragen aus einer Kategorie ✅
       Step 2: Array mit Fragen aus mehreren Kategorien
-              condition mehr als eine Kategorie ausgewählt: if(selectedCategories.length > 1) { }
-              condition gerade/ungerade Zahl an Kategorien: if((chosenNr % selectedCategories.length) % 2 == 0) { }
-              Wenn gerade: übergebe Array jeweils chosenNr % selectedCategories.length-questions aus jeder ausgewählten Kategorie
+              Wenn gerade: übergebe Array jeweils chosenNr % selectedCategories.length-questions aus jeder ausgewählten Kategorie ✅
               Wenn ungerade: 20 Fragen 3 Kategorien = 6, 7, 7 // 10 Fragen, 3 Kategorien = 3, 3, 4 => Wie abbilden?
       */
     },

@@ -1,9 +1,15 @@
 <template>
   <BaseHeader
     :headline="textForPageHeader.headline"
-    :description="textForPageHeader.description"
+    :description="
+      textForPageHeader.description +
+      ' ' +
+      currentQuestionIndex +
+      1 +
+      questionsFromSelectedCategories.length
+    "
   ></BaseHeader>
-  <pre>{{ questionsFromSelectedCategories }}</pre>
+  <!-- <pre>{{ questionsFromSelectedCategories }}</pre> -->
   <p>{{ currentQuestion }}</p>
   <BaseButton :btnTxt="btnTxt" @click="navigateThroughSession" />
 </template>
@@ -24,16 +30,8 @@ export default {
         headline: "Quizbox Session",
         /* 👩🏻‍💻 Feature: description wird zu computed property, das aktuellen index im array anzeigt;
         wenn array durch ist, Text anzeigen "Session finished" */
-        description: "Question count 01/30",
+        description: "Question count",
       },
-      /* Hier arrayWithQuestions einbinden, der in PlayQuizbox.vue generiert wurde */
-      arrayWithQuestions: [
-        "What is the purpose of the flex-direction property?",
-        "What is a flexbox?",
-        "What is the p?",
-        "What is the flex-shrink property?",
-        "What is the flex-basis property?",
-      ],
       currentQuestionIndex: 0,
     };
   },
@@ -42,7 +40,7 @@ export default {
       return this.$store.getters.questionsFromSelectedCategories;
     },
     currentQuestion() {
-      return this.arrayWithQuestions[this.currentQuestionIndex];
+      return this.questionsFromSelectedCategories[this.currentQuestionIndex];
       /* 👩🏻‍💻 Feature:
       currentQuestion wird zu "Congratulations! You finished..." wenn array durchgelaufen ist */
     },

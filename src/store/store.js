@@ -107,4 +107,5 @@ export default store;
       Step 2: Array mit Fragen aus mehreren Kategorien
               Wenn gerade: übergebe Array jeweils selectedNr % selectedCategories.length-questions aus jeder ausgewählten Kategorie ✅
               Wenn ungerade: 20 Fragen 3 Kategorien = 6, 7, 7 // 10 Fragen, 3 Kategorien = 3, 3, 4 => Wie abbilden?
+              Aufrunden, so viel wie aufgerundet wurde am Ende wieder wegschneiden
       */

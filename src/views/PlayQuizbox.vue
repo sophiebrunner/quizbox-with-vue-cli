@@ -23,7 +23,6 @@
         :id="scopedData.item.category"
         :value="scopedData.item.category"
         v-model="selectedCategories"
-        @change="onSelectionOfCategories"
       />
       <label :for="scopedData.item.category"
         ><span>{{ scopedData.item.categoryLabel }}</span> -
@@ -34,7 +33,7 @@
     </template>
   </BaseList>
   <pre>{{ randomlyGeneratedQuestions }}</pre>
-  <BaseButton :btnTxt="btnTxt"></BaseButton>
+  <BaseButton :btnTxt="btnTxt" @click="onStartQuizbox"></BaseButton>
 </template>
 
 <script>
@@ -66,9 +65,6 @@ export default {
       selectedNr: 10,
       selectedCategories: [],
       btnTxt: "Start Quizbox",
-      filteredQuizData: [],
-      questionsFromFilteredquizData: [],
-      randomlyGeneratedQuestions: [],
     };
   },
 
@@ -83,11 +79,12 @@ export default {
 
   methods: {
     onNrOfQuestionsSelect(value) {
-      const selectedNr = value;
-      this.$store.commit("changeSelectedNr", selectedNr);
+      this.selectedNr = value;
     },
-    onSelectionOfCategories() {
+    onStartQuizbox() {
       this.$store.commit("setSelectedCategories", this.selectedCategories);
+      this.$store.commit("changeSelectedNr", this.selectedNr);
+      this.$router.push({ name: "session" });
     },
   },
 };

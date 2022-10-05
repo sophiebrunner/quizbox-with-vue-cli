@@ -1,15 +1,13 @@
 <template>
   <BaseHeader
     :headline="textForPageHeader.headline"
-    :description="
-      textForPageHeader.description +
-      ' ' +
-      currentQuestionIndex +
-      1 +
-      questionsFromSelectedCategories.length
-    "
-  ></BaseHeader>
-  <!-- <pre>{{ questionsFromSelectedCategories }}</pre> -->
+    :description="currentQuestionCount"
+    ><template v-slot:description
+      ><span>{{ textForPageHeader.description }}</span
+      ><span>{{ currentQuestionCount }}</span></template
+    ></BaseHeader
+  >
+  <pre>{{ questionsFromSelectedCategories }}</pre>
   <p>{{ currentQuestion }}</p>
   <BaseButton :btnTxt="btnTxt" @click="navigateThroughSession" />
 </template>
@@ -28,11 +26,10 @@ export default {
     return {
       textForPageHeader: {
         headline: "Quizbox Session",
-        /* 👩🏻‍💻 Feature: description wird zu computed property, das aktuellen index im array anzeigt;
-        wenn array durch ist, Text anzeigen "Session finished" */
         description: "Question count",
       },
       currentQuestionIndex: 0,
+      btnTxt: "Next",
     };
   },
   computed: {
@@ -41,19 +38,39 @@ export default {
     },
     currentQuestion() {
       return this.questionsFromSelectedCategories[this.currentQuestionIndex];
-      /* 👩🏻‍💻 Feature:
-      currentQuestion wird zu "Congratulations! You finished..." wenn array durchgelaufen ist */
     },
-    btnTxt() {
-      return "Next";
-      /* 👩🏻‍💻 Feature:
-      btnTxt ändert sich je nach Stelle im array; wenn fertig "Finish" anzeigen
-      Condirional operator? */
+    currentQuestionCount() {
+      return this.currentQuestionIndex + 1 < 10
+        ? "0" +
+            (this.currentQuestionIndex + 1) +
+            "/" +
+            this.questionsFromSelectedCategories.length
+        : this.currentQuestionIndex +
+            1 +
+            "/" +
+            this.questionsFromSelectedCategories.length;
+    },
+  },
+  watch: {
+    currentQuestionIndex(currentIndex) {
+      if (currentIndex + 1 > this.questionsFromSelectedCategories.length) {
+        this.endQuizSession();
+      }
     },
   },
   methods: {
     navigateThroughSession() {
-      this.currentQuestionIndex++;
+      return this.currentQuestionIndex <
+        this.questionsFromSelectedCategories.length
+        ? this.currentQuestionIndex++
+        : this.$router.push({ name: "quizbox" });
+    },
+    endQuizSession() {
+      this.btnTxt = "Finish";
+      this.currentQuestion =
+        "Congratulations! You finished the Quizbox session.";
+      this.textForPageHeader.description = "Session finished";
+      this.currentQuestionCount = "";
     },
   },
 };

@@ -2,7 +2,9 @@
   <slot :headline="headline" name="headline"
     ><h2>{{ headline }}</h2></slot
   >
-  <p>{{ description }}</p>
+  <slot :description="description" name="description">
+    <p>{{ description }}</p></slot
+  >
 </template>
 
 <script>
@@ -14,7 +16,6 @@ export default {
       required: true,
     },
     description: {
-      type: String,
       required: false,
     },
   },

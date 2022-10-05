@@ -32,7 +32,6 @@
       >
     </template>
   </BaseList>
-  <pre>{{ randomlyGeneratedQuestions }}</pre>
   <BaseButton :btnTxt="btnTxt" @click="onStartQuizbox"></BaseButton>
 </template>
 
@@ -82,9 +81,13 @@ export default {
       this.selectedNr = value;
     },
     onStartQuizbox() {
-      this.$store.commit("setSelectedCategories", this.selectedCategories);
-      this.$store.commit("changeSelectedNr", this.selectedNr);
-      this.$router.push({ name: "session" });
+      if (this.selectedCategories.length > 0) {
+        this.$store.commit("setSelectedCategories", this.selectedCategories);
+        this.$store.commit("changeSelectedNr", this.selectedNr);
+        this.$router.push({ name: "session" });
+      } else {
+        alert("Please select at least one question area");
+      }
     },
   },
 };

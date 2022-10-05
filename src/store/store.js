@@ -71,41 +71,61 @@ const store = createStore({
         return el.questions;
       });
 
+      function shuffleArray(arr) {
+        return [...arr].sort(() => 0.5 - Math.random());
+      }
       function getRandomQuestions(arr, num) {
-        const shuffledArray = [...arr].sort(() => 0.5 - Math.random());
+        const shuffledArray = shuffleArray(arr);
         return shuffledArray.slice(0, num);
       }
 
-      // if ((state.selectedNr % state.selectedCategories.length) % 2 == 0) {
-      let randomlyGeneratedQuestions = questionsFromFilteredquizData.map(
-        (arrEl) => {
-          return getRandomQuestions(
-            arrEl,
-            state.selectedNr / questionsFromFilteredquizData.length
-          );
+      if (
+        Number.isInteger(state.selectedNr / state.selectedCategories.length)
+      ) {
+        let randomlyGeneratedQuestions = questionsFromFilteredquizData.map(
+          (arrEl) => {
+            return getRandomQuestions(
+              arrEl,
+              state.selectedNr / questionsFromFilteredquizData.length
+            );
+          }
+        );
+
+        randomlyGeneratedQuestions = randomlyGeneratedQuestions.flatMap(
+          (el) => el
+        );
+
+        randomlyGeneratedQuestions = shuffleArray(randomlyGeneratedQuestions);
+        return randomlyGeneratedQuestions;
+      } else {
+        let i = state.selectedNr;
+
+        while (
+          Number.isInteger(i / state.selectedCategories.length) === false
+        ) {
+          i++;
         }
-      );
 
-      randomlyGeneratedQuestions = randomlyGeneratedQuestions.flatMap(
-        (el) => el
-      );
+        let randomlyGeneratedQuestions = questionsFromFilteredquizData.map(
+          (arrEl) => {
+            return getRandomQuestions(
+              arrEl,
+              i / questionsFromFilteredquizData.length
+            );
+          }
+        );
 
-      randomlyGeneratedQuestions = [...randomlyGeneratedQuestions].sort(
-        () => 0.5 - Math.random()
-      );
-      return randomlyGeneratedQuestions;
+        randomlyGeneratedQuestions = randomlyGeneratedQuestions.flatMap(
+          (el) => el
+        );
+        randomlyGeneratedQuestions = shuffleArray(randomlyGeneratedQuestions);
+        randomlyGeneratedQuestions = randomlyGeneratedQuestions.slice(
+          0,
+          state.selectedNr
+        );
+        return randomlyGeneratedQuestions;
+      }
     },
   },
 });
 export default store;
-/*👩🏻‍💻 Feature:
-      Requirement: Anzahl Fragen UND 1 oder mehrere Kategorien;
-      wenn mehrere Kategorien ausgewählt => gleiche Zahl an Fragen aus
-      ausgewählten Kategorien zusammenstellen
-
-      Step 1: Array mit Fragen aus einer Kategorie ✅
-      Step 2: Array mit Fragen aus mehreren Kategorien
-              Wenn gerade: übergebe Array jeweils selectedNr % selectedCategories.length-questions aus jeder ausgewählten Kategorie ✅
-              Wenn ungerade: 20 Fragen 3 Kategorien = 6, 7, 7 // 10 Fragen, 3 Kategorien = 3, 3, 4 => Wie abbilden?
-              Aufrunden, so viel wie aufgerundet wurde am Ende wieder wegschneiden
-      */

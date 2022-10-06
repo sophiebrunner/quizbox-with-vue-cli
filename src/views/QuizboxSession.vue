@@ -35,7 +35,7 @@ export default {
 
   computed: {
     questionsFromSelectedCategories() {
-      return this.$store.getters.questionsFromSelectedCategories;
+      return this.$store.getters.randomQuestionsFromSelectedCategories;
     },
     sessionUnfinished() {
       return (

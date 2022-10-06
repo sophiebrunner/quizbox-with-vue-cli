@@ -71,9 +71,6 @@ export default {
     quizData() {
       return this.$store.state.quizData;
     },
-    selectOption() {
-      return this.name;
-    },
   },
 
   methods: {

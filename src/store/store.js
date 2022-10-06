@@ -61,69 +61,49 @@ const store = createStore({
       });
     },
   },
+  /* Gefilterte Daten, die aus component abgerufen werden können */
   getters: {
-    questionsFromSelectedCategories(state) {
-      const filteredQuizData = state.quizData.filter((item) =>
-        state.selectedCategories.includes(item.category)
-      );
-
-      const questionsFromFilteredquizData = filteredQuizData.map((el) => {
-        return el.questions;
-      });
+    randomQuestionsFromSelectedCategories(state) {
+      const questionsFromSelectedCategories = state.quizData
+        .filter((item) => state.selectedCategories.includes(item.category))
+        .map((el) => {
+          return el.questions;
+        });
 
       function shuffleArray(arr) {
         return [...arr].sort(() => 0.5 - Math.random());
       }
-      function getRandomQuestions(arr, num) {
+      function randomizeQuestions(arr, num) {
         const shuffledArray = shuffleArray(arr);
         return shuffledArray.slice(0, num);
+      }
+      function getRandomQuestionsFromSelectedCategories(num) {
+        return questionsFromSelectedCategories
+          .map((el) => {
+            return randomizeQuestions(
+              el,
+              num / questionsFromSelectedCategories.length
+            );
+          })
+          .flatMap((el) => el);
       }
 
       if (
         Number.isInteger(state.selectedNr / state.selectedCategories.length)
       ) {
-        let randomlyGeneratedQuestions = questionsFromFilteredquizData.map(
-          (arrEl) => {
-            return getRandomQuestions(
-              arrEl,
-              state.selectedNr / questionsFromFilteredquizData.length
-            );
-          }
+        return shuffleArray(
+          getRandomQuestionsFromSelectedCategories(state.selectedNr)
         );
-
-        randomlyGeneratedQuestions = randomlyGeneratedQuestions.flatMap(
-          (el) => el
-        );
-
-        randomlyGeneratedQuestions = shuffleArray(randomlyGeneratedQuestions);
-        return randomlyGeneratedQuestions;
       } else {
         let i = state.selectedNr;
-
         while (
           Number.isInteger(i / state.selectedCategories.length) === false
         ) {
           i++;
         }
-
-        let randomlyGeneratedQuestions = questionsFromFilteredquizData.map(
-          (arrEl) => {
-            return getRandomQuestions(
-              arrEl,
-              i / questionsFromFilteredquizData.length
-            );
-          }
+        return shuffleArray(
+          getRandomQuestionsFromSelectedCategories(i).slice(0, state.selectedNr)
         );
-
-        randomlyGeneratedQuestions = randomlyGeneratedQuestions.flatMap(
-          (el) => el
-        );
-        randomlyGeneratedQuestions = shuffleArray(randomlyGeneratedQuestions);
-        randomlyGeneratedQuestions = randomlyGeneratedQuestions.slice(
-          0,
-          state.selectedNr
-        );
-        return randomlyGeneratedQuestions;
       }
     },
   },

@@ -1,14 +1,9 @@
 <template>
   <BaseHeader :headline="textForPageHeader.headline"
     ><template v-slot:description
-      ><p
-        v-if="
-          this.currentQuestionIndex + 1 <
-          this.questionsFromSelectedCategories.length
-        "
-      >
+      ><p v-if="sessionUnfinished">
         <span>{{ textForPageHeader.description }}</span>
-        <span>{{ currentQuestionCount }}</span>
+        <span>{{ displayCurrentQuestionCount }}</span>
       </p>
       <p v-else>{{ "Session finished" }}</p></template
     ></BaseHeader
@@ -27,6 +22,7 @@ export default {
     BaseHeader,
     BaseButton,
   },
+
   data() {
     return {
       textForPageHeader: {
@@ -36,34 +32,39 @@ export default {
       currentQuestionIndex: 0,
     };
   },
+
   computed: {
     questionsFromSelectedCategories() {
       return this.$store.getters.questionsFromSelectedCategories;
     },
+    sessionUnfinished() {
+      return (
+        this.currentQuestionIndex < this.questionsFromSelectedCategories.length
+      );
+    },
     currentQuestionCount() {
+      return (
+        this.currentQuestionIndex +
+        1 +
+        "/" +
+        this.questionsFromSelectedCategories.length
+      );
+    },
+    displayCurrentQuestionCount() {
       return this.currentQuestionIndex + 1 < 10
-        ? "0" +
-            (this.currentQuestionIndex + 1) +
-            "/" +
-            this.questionsFromSelectedCategories.length
-        : this.currentQuestionIndex +
-            1 +
-            "/" +
-            this.questionsFromSelectedCategories.length;
+        ? "0" + this.currentQuestionCount
+        : this.currentQuestionCount;
     },
     currentQuestion() {
-      return this.currentQuestionIndex + 1 <
-        this.questionsFromSelectedCategories.length
+      return this.sessionUnfinished
         ? this.questionsFromSelectedCategories[this.currentQuestionIndex]
         : "Congratulations! You finished the Quizbox session.";
     },
     btnTxt() {
-      return this.currentQuestionIndex + 1 <
-        this.questionsFromSelectedCategories.length
-        ? "Next"
-        : "Finish";
+      return this.sessionUnfinished ? "Next" : "Finish";
     },
   },
+
   methods: {
     navigateThroughSession() {
       return this.currentQuestionIndex <

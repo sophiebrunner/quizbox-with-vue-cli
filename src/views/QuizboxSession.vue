@@ -1,13 +1,18 @@
 <template>
-  <BaseHeader
-    :headline="textForPageHeader.headline"
-    :description="currentQuestionCount"
+  <BaseHeader :headline="textForPageHeader.headline"
     ><template v-slot:description
-      ><span>{{ textForPageHeader.description }}</span
-      ><span>{{ currentQuestionCount }}</span></template
+      ><p
+        v-if="
+          this.currentQuestionIndex + 1 <
+          this.questionsFromSelectedCategories.length
+        "
+      >
+        <span>{{ textForPageHeader.description }}</span>
+        <span>{{ currentQuestionCount }}</span>
+      </p>
+      <p v-else>{{ "Session finished" }}</p></template
     ></BaseHeader
   >
-  <pre>{{ questionsFromSelectedCategories }}</pre>
   <p>{{ currentQuestion }}</p>
   <BaseButton :btnTxt="btnTxt" @click="navigateThroughSession" />
 </template>
@@ -29,15 +34,11 @@ export default {
         description: "Question count",
       },
       currentQuestionIndex: 0,
-      btnTxt: "Next",
     };
   },
   computed: {
     questionsFromSelectedCategories() {
       return this.$store.getters.questionsFromSelectedCategories;
-    },
-    currentQuestion() {
-      return this.questionsFromSelectedCategories[this.currentQuestionIndex];
     },
     currentQuestionCount() {
       return this.currentQuestionIndex + 1 < 10
@@ -50,12 +51,17 @@ export default {
             "/" +
             this.questionsFromSelectedCategories.length;
     },
-  },
-  watch: {
-    currentQuestionIndex(currentIndex) {
-      if (currentIndex + 1 > this.questionsFromSelectedCategories.length) {
-        this.endQuizSession();
-      }
+    currentQuestion() {
+      return this.currentQuestionIndex + 1 <
+        this.questionsFromSelectedCategories.length
+        ? this.questionsFromSelectedCategories[this.currentQuestionIndex]
+        : "Congratulations! You finished the Quizbox session.";
+    },
+    btnTxt() {
+      return this.currentQuestionIndex + 1 <
+        this.questionsFromSelectedCategories.length
+        ? "Next"
+        : "Finish";
     },
   },
   methods: {
@@ -64,13 +70,6 @@ export default {
         this.questionsFromSelectedCategories.length
         ? this.currentQuestionIndex++
         : this.$router.push({ name: "quizbox" });
-    },
-    endQuizSession() {
-      this.btnTxt = "Finish";
-      this.currentQuestion =
-        "Congratulations! You finished the Quizbox session.";
-      this.textForPageHeader.description = "Session finished";
-      this.currentQuestionCount = "";
     },
   },
 };

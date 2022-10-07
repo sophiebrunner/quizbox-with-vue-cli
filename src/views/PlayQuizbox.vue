@@ -71,6 +71,9 @@ export default {
     quizData() {
       return this.$store.state.quizData;
     },
+    currentQuestionIndex() {
+      return this.$state.currentQuestionIndex;
+    },
   },
 
   methods: {
@@ -80,7 +83,11 @@ export default {
     onStartQuizbox() {
       if (this.selectedCategories.length > 0) {
         this.$store.commit("setSelectedCategories", this.selectedCategories);
+        localStorage.setItem("selectedCategories", this.selectedCategories);
         this.$store.commit("changeSelectedNr", this.selectedNr);
+        localStorage.setItem("selectedNr", this.selectedNr);
+        this.$store.commit("setInitialCurrentQuestionIndex", 0);
+        // Hier noch local storage setzen
         this.$router.push({ name: "session" });
       } else {
         alert("Please select at least one question area");

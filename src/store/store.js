@@ -1,14 +1,17 @@
 import { createStore } from "vuex";
+import { shuffleArray } from "./helpers";
+import { getRandomQuestionsFromSelectedCategories } from "./helpers";
 
 const store = createStore({
   state() {
     return {
       quizData: [],
-      selectedNr: null,
+      selectedNr: 10,
       selectedCategories: [],
+      currentQuestionIndex: 0,
     };
   },
-  /* User input: zB bestimmte Kategorien auswählen und Fragen daraus laden */
+  /* User input, change of data in components */
   mutations: {
     setQuizData(state, quizDataFromApi) {
       state.quizData = quizDataFromApi;
@@ -19,8 +22,14 @@ const store = createStore({
     setSelectedCategories(state, selectedCategoriesFromComponent) {
       state.selectedCategories = selectedCategoriesFromComponent;
     },
+    setInitialCurrentQuestionIndex(state, number) {
+      state.currentQuestionIndex = number;
+    },
+    incrementCurrentQuestionIndex(state) {
+      state.currentQuestionIndex++;
+    },
   },
-  /* Initiales Laden von Daten */
+  /* Initial data loading */
   actions: {
     async fetchDataFromApi(context) {
       const categoryLabels = new Map([
@@ -60,49 +69,54 @@ const store = createStore({
         context.commit("setQuizData", result);
       });
     },
+    getCurrentQuestionIndexFromLocalStorage(context) {
+      const result = localStorage.getItem("currentQuestionIndex");
+      context.commit("setInitialCurrentQuestionIndex", result);
+    },
+    getSelectedCategoriesFromLocalStorage(context) {
+      const result = localStorage.getItem("selectedCategories");
+      context.commit("setSelectedCategories", result);
+    },
+    getSelectedNumberFromLocalStorage(context) {
+      const result = localStorage.getItem("selectedNr");
+      context.commit("changeSelectedNr", result);
+    },
   },
-  /* Gefilterte Daten, die aus component abgerufen werden können */
+  /* Filtered data that can be accessed in component */
   getters: {
     randomQuestionsFromSelectedCategories(state) {
+      /* Early exit */
+      if (state.selectedNr === null || state.selectedCategories.length === 0) {
+        return [];
+      }
       const questionsFromSelectedCategories = state.quizData
         .filter((item) => state.selectedCategories.includes(item.category))
         .map((el) => {
           return el.questions;
         });
-
-      function shuffleArray(arr) {
-        return [...arr].sort(() => 0.5 - Math.random());
-      }
-      function randomizeQuestions(arr, num) {
-        const shuffledArray = shuffleArray(arr);
-        return shuffledArray.slice(0, num);
-      }
-      function getRandomQuestionsFromSelectedCategories(num) {
-        return questionsFromSelectedCategories
-          .map((el) => {
-            return randomizeQuestions(
-              el,
-              num / questionsFromSelectedCategories.length
-            );
-          })
-          .flatMap((el) => el);
-      }
-
+      /* Condition: checks, if relation between selected number (10, 20, 30) and the number of selected categories (1 - 5) is an integer
+      Integer = whole number (1, 2, 3 etc.) vs. fractional number (1.25, 3.75 etc.) 
+      If the condition is true it means an equal amount of questions can be selected from all selected categories
+      If the condition is false it means the division produced a remainder so the remainder has to be inequally distributed between the categories */
       if (
         Number.isInteger(state.selectedNr / state.selectedCategories.length)
       ) {
         return shuffleArray(
-          getRandomQuestionsFromSelectedCategories(state.selectedNr)
+          getRandomQuestionsFromSelectedCategories(
+            questionsFromSelectedCategories,
+            state.selectedNr
+          )
         );
       } else {
         let i = state.selectedNr;
-        while (
-          Number.isInteger(i / state.selectedCategories.length) === false
-        ) {
+        while (!Number.isInteger(i / state.selectedCategories.length)) {
           i++;
         }
         return shuffleArray(
-          getRandomQuestionsFromSelectedCategories(i).slice(0, state.selectedNr)
+          getRandomQuestionsFromSelectedCategories(
+            questionsFromSelectedCategories,
+            i
+          ).slice(0, state.selectedNr)
         );
       }
     },

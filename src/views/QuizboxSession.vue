@@ -29,13 +29,15 @@ export default {
         headline: "Quizbox Session",
         description: "Question count",
       },
-      currentQuestionIndex: 0,
     };
   },
 
   computed: {
     questionsFromSelectedCategories() {
       return this.$store.getters.randomQuestionsFromSelectedCategories;
+    },
+    currentQuestionIndex() {
+      return this.$store.state.currentQuestionIndex;
     },
     sessionUnfinished() {
       return (
@@ -67,10 +69,12 @@ export default {
 
   methods: {
     navigateThroughSession() {
-      return this.currentQuestionIndex <
-        this.questionsFromSelectedCategories.length
-        ? this.currentQuestionIndex++
-        : this.$router.push({ name: "quizbox" });
+      if (this.sessionUnfinished) {
+        this.$store.commit("incrementCurrentQuestionIndex");
+        localStorage.setItem("currentQuestionIndex", this.currentQuestionIndex);
+      } else {
+        this.$router.push({ name: "quizbox" });
+      }
     },
   },
 };

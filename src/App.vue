@@ -1,10 +1,12 @@
 <template>
-  <h1>Quizbox</h1>
-  <nav>
-    <router-link :to="{ name: 'quizbox' }">Play Quizbox</router-link> |
-    <router-link :to="{ name: 'questions' }">Browse Questions</router-link> |
-    <router-link :to="{ name: 'session' }">Start Quizbox</router-link>
-  </nav>
+  <div class="menu-wrapper">
+    <h1>Quizbox</h1>
+    <nav>
+      <router-link :to="{ name: 'quizbox' }">Play Quizbox</router-link> |
+      <router-link :to="{ name: 'questions' }">Browse Questions</router-link> |
+      <router-link :to="{ name: 'session' }">Start Quizbox</router-link>
+    </nav>
+  </div>
   <router-view />
 </template>
 
@@ -13,6 +15,9 @@
 export default {
   created() {
     this.$store.dispatch("fetchDataFromApi");
+    this.$store.dispatch("getCurrentQuestionIndexFromLocalStorage");
+    this.$store.dispatch("getSelectedCategoriesFromLocalStorage");
+    this.$store.dispatch("getSelectedNumberFromLocalStorage");
   },
 };
 </script>
@@ -64,8 +69,6 @@ h3 {
 
 nav {
   padding: 30px;
-  color: var(--clr-surface);
-  background-color: var(--clr-primary);
 }
 
 nav a {
@@ -75,5 +78,13 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.menu-wrapper {
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  background-color: var(--clr-primary);
+  color: var(--clr-surface);
+  text-transform: uppercase;
 }
 </style>

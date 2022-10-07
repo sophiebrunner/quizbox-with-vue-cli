@@ -1,6 +1,6 @@
 import { createStore } from "vuex";
 import { shuffleArray } from "./helpers";
-import { getRandomQuestionsFromSelectedCategories } from "./helpers";
+import { getNrOfRandomizedQuestionsFromSelCategories } from "./helpers";
 
 const store = createStore({
   state() {
@@ -22,7 +22,7 @@ const store = createStore({
     setSelectedCategories(state, selectedCategoriesFromComponent) {
       state.selectedCategories = selectedCategoriesFromComponent;
     },
-    setInitialCurrentQuestionIndex(state, number) {
+    setCurrentQuestionIndex(state, number) {
       state.currentQuestionIndex = number;
     },
     incrementCurrentQuestionIndex(state) {
@@ -70,16 +70,19 @@ const store = createStore({
       });
     },
     getCurrentQuestionIndexFromLocalStorage(context) {
-      const result = localStorage.getItem("currentQuestionIndex");
-      context.commit("setInitialCurrentQuestionIndex", result);
+      context.commit(
+        "setCurrentQuestionIndex",
+        Number(localStorage.getItem("currentQuestionIndex"))
+      );
     },
     getSelectedCategoriesFromLocalStorage(context) {
-      const result = localStorage.getItem("selectedCategories");
-      context.commit("setSelectedCategories", result);
+      context.commit(
+        "setSelectedCategories",
+        localStorage.getItem("selectedCategories")
+      );
     },
     getSelectedNumberFromLocalStorage(context) {
-      const result = localStorage.getItem("selectedNr");
-      context.commit("changeSelectedNr", result);
+      context.commit("changeSelectedNr", localStorage.getItem("selectedNr"));
     },
   },
   /* Filtered data that can be accessed in component */
@@ -102,7 +105,7 @@ const store = createStore({
         Number.isInteger(state.selectedNr / state.selectedCategories.length)
       ) {
         return shuffleArray(
-          getRandomQuestionsFromSelectedCategories(
+          getNrOfRandomizedQuestionsFromSelCategories(
             questionsFromSelectedCategories,
             state.selectedNr
           )
@@ -113,7 +116,7 @@ const store = createStore({
           i++;
         }
         return shuffleArray(
-          getRandomQuestionsFromSelectedCategories(
+          getNrOfRandomizedQuestionsFromSelCategories(
             questionsFromSelectedCategories,
             i
           ).slice(0, state.selectedNr)

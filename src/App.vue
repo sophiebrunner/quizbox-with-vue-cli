@@ -18,21 +18,59 @@ export default {
 </script>
 
 <style>
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Source Sans Pro SemiBold 600 */
+@font-face {
+  font-family: "Source Sans Pro";
+  src: local("Source Sans Pro"),
+    url(./styles/fonts/Source_Sans_Pro/SourceSansPro-SemiBold.ttf)
+      format("truetype");
+}
+
+/* Montserrat SemiBold 600 */
+@font-face {
+  font-family: "Montserrat";
+  src: local("Montserrat"),
+    url(./styles/fonts/Montserrat/static/Montserrat-SemiBold.ttf)
+      format("truetype");
+}
+
+body {
+  margin: 0 auto;
+  max-width: 390px;
+  height: 100vh;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: "Source Sans Pro", sans-serif;
+  --clr-primary: #6a1cc3;
+  --clr-primary-inactive: #6a1cc326;
+  --clr-secondary: #8849cf;
+  --clr-surface: #fbfbfb;
+  --clr-text: #00000057;
   text-align: center;
-  color: #2c3e50;
+}
+
+h1,
+h2,
+h3 {
+  text-align: center;
 }
 
 nav {
   padding: 30px;
+  color: var(--clr-surface);
+  background-color: var(--clr-primary);
 }
 
 nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: var(--clr-surface);
 }
 
 nav a.router-link-exact-active {

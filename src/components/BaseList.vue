@@ -27,3 +27,11 @@ export default {
   },
 };
 </script>
+
+<style>
+ul {
+  text-align: left;
+  list-style: none;
+  _padding-left: 0;
+}
+</style>

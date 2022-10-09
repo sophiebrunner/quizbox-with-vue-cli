@@ -72,6 +72,7 @@ export default {
       if (this.sessionUnfinished) {
         this.$store.commit("incrementCurrentQuestionIndex");
         localStorage.setItem("currentQuestionIndex", this.currentQuestionIndex);
+        localStorage.setItem("currentQuestion", this.currentQuestion);
       } else {
         this.$router.push({ name: "quizbox" });
       }

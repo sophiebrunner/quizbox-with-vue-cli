@@ -1,14 +1,15 @@
 <template>
   <header class="page-header">
-    <nav class="hamburger-menu">
-      <input type="checkbox" class="hamburger-menu__hidden-checkbox" />
-      <span class="hamburger-menu__icon"></span>
-      <span class="hamburger-menu__icon"></span>
-      <span class="hamburger-menu__icon"></span>
-    </nav>
-    <h1 class="heading heading--light-colored">Quizbox</h1>
-    <div class="menu__triangle--primary"></div>
-    <nav class="nav">
+    <div class="hamburger-menu-wrapper">
+      <nav class="hamburger-menu" @click="toggleMenu">
+        <span class="hamburger-menu__icon" :class="{ clicked: showNav }"></span>
+        <span class="hamburger-menu__icon" :class="{ clicked: showNav }"></span>
+        <span class="hamburger-menu__icon" :class="{ clicked: showNav }"></span>
+      </nav>
+      <h1 class="heading heading--light-colored">Quizbox</h1>
+      <div class="menu__triangle menu__triangle--primary"></div>
+    </div>
+    <nav class="nav" :class="{ active: showNav, hidden: !showNav }">
       <ul class="nav__list">
         <li class="nav__item">
           <router-link :to="{ name: 'quizbox' }" class="text--light-colored"
@@ -21,15 +22,24 @@
           >
         </li>
       </ul>
+      <div class="menu__triangle menu__triangle--secondary"></div>
     </nav>
-    <div class="menu__triangle--secondary"></div>
   </header>
   <router-view />
 </template>
 
-//
 <script>
 export default {
+  data() {
+    return {
+      showNav: true,
+    };
+  },
+  methods: {
+    toggleMenu() {
+      this.showNav = !this.showNav;
+    },
+  },
   created() {
     this.$store.dispatch("fetchDataFromApi");
     this.$store.dispatch("getCurrentQuestionIndexFromLocalStorage");
@@ -55,6 +65,7 @@ export default {
       format("truetype");
 }
 
+/* General styling */
 *,
 *::before,
 *::after {
@@ -62,7 +73,7 @@ export default {
 }
 body {
   margin: 0 auto;
-  max-width: 320px;
+  max-width: 100vw;
 }
 #app {
   font-family: "Source Sans Pro", sans-serif;
@@ -74,6 +85,7 @@ body {
   text-align: center;
 }
 
+/* Headings */
 h1 {
   padding: 1em;
   margin: 0;
@@ -81,105 +93,94 @@ h1 {
   text-align: center;
 }
 
+/* Header area */
 .page-header {
-  _position: relative;
+  position: relative;
 }
 
-.menu__triangle--primary {
-  width: 0;
-  height: 0;
-  border-left: 160px solid transparent;
-  border-right: 160px solid transparent;
-  border-top: 20px solid var(--clr-primary);
+/* Hamburger menu */
+.hamburger-menu-wrapper {
+  position: relative;
+  z-index: 1;
 }
-.menu__triangle--secondary {
-  _position: relative;
-  width: 0;
-  height: 0;
-  border-left: 160px solid transparent;
-  border-right: 160px solid transparent;
-  border-top: 20px solid var(--clr-secondary);
-}
-.hamburger-menu__hidden-checkbox {
-  border: 2px solid black;
-  display: block;
-  width: 3em;
-  height: 2em;
-  _position: absolute;
-  cursor: pointer;
-  opacity: 0;
-  z-index: 2;
+.hamburger-menu {
+  position: absolute;
+  top: 2rem;
 }
 .hamburger-menu__icon {
   display: block;
-  width: 2em;
+  width: 2.5em;
   height: 0.25em;
-  background: var(--clr-text);
+  background: var(--clr-surface);
   border-radius: 3px;
-  z-index: 1;
   transform-origin: 0 0.5em 0;
-  transition: transform 0.3s cubic-bezier(0.77, 0.2 0.05, 1),
+  transition: transform 0.5s cubic-bezier(0.77, 0.2 0.05, 1),
     background 0.5 cubic-bezier(0.77, 0.2 0.05, 1), opacity 0.55s ease;
 }
 .hamburger-menu__icon + .hamburger-menu__icon {
   margin-top: 0.5em;
 }
-.hamburger-menu__icon:first-child {
-  transform-origin: 0% 0%;
+.clicked:first-child {
+  transform: rotate(45deg) translate(-2px, -1px);
+  transform-origin: 0 0;
 }
-.hamburger-menu__icon:last-child(2) {
-  transform-origin: 0% 100%;
-}
-.hamburger-menu__hidden-checkbox:checked ~ .hamburger-menu__icon {
-  opacity: 1;
-  transform: rotate(45deg) translate(0, 0);
-  background: var(--clr-surface);
-}
-.hamburger-menu__hidden-checkbox:checked
-  ~ .hamburger-menu__icon:nth-last-child(3) {
+.clicked:nth-last-child(2) {
   opacity: 0;
-  transform: rotate(0deg);
 }
-.hamburger-menu__hidden-checkbox:checked
-  ~ .hamburger-menu__icon:nth-last-child(2) {
-  transform: rotate(-45deg) translate(0, 0);
+.clicked:last-child {
+  transform: rotate(-45deg) translate(-2px, -1px);
+  transform-origin: 0 100%;
 }
+
+/* Navigation menu */
 .nav {
-  _position: relative;
-  top: 0.3em;
-  z-index: 1;
-  -webkit-user-select: none;
-  user-select: none;
   font-family: "Montserrat", sans-serif;
   font-size: 16px;
-  color: var(--clr-surface);
   text-transform: uppercase;
-  text-align: center;
+  color: var(--clr-surface);
+  cursor: pointer;
+  transition: transform 1s ease-in-out;
+  width: 100vw;
+  margin-left: auto;
+  margin-right: auto;
 }
 .nav__list {
+  background: var(--clr-secondary);
   margin: 0;
   padding-left: 0;
-  display: flex;
-  flex-direction: column;
+  padding-top: 4em;
+  padding-bottom: 4em;
   list-style-type: none;
-  _position: absolute;
-  _top: 5em;
-  left: 0;
-  background: var(--clr-secondary);
-  transform-origin: 0% 100%;
-  _transform: translate(0, -400%);
-  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
-  width: 320px;
-  display: inline-block;
-  text-align: left;
 }
 .nav__item {
 }
 .nav__item + .nav__item {
   margin-top: 2em;
 }
-.hamburger-menu__hidden-checkbox:checked ~ .nav__list {
-  transform: none;
+.hidden {
+  position: relative;
+  transform: translateY(-200px);
+  z-index: 0;
+}
+.active {
+  transform: translateY(-40px);
+}
+.menu__triangle {
+  width: 0;
+  height: 0;
+  border-left: 50vw solid transparent;
+  border-right: 50vw solid transparent;
+}
+.menu__triangle--primary {
+  border-top: 2em solid var(--clr-primary);
+}
+.menu__triangle--secondary {
+  border-top: 2em solid var(--clr-secondary);
+}
+nav a {
+  border-bottom: 3px solid var(--clr-surface);
+  text-decoration: none;
+  padding: 1em;
 }
 nav a.router-link-exact-active {
   background-color: var(--clr-primary);

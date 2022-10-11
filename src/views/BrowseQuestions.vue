@@ -1,21 +1,23 @@
 <template>
-  <BaseHeader :headline="textForPageHeader.headline" />
-  <BaseSelect
-    :description="textForPageHeader.description"
-    :select-options="quizCategories"
-    @change="onCategorySelect"
-  >
-  </BaseSelect>
-  <BaseHeader
-    :headline="textForMainContent.headline"
-    :description="numberOfQuestionsFromSelectedCategory"
-    ><template v-slot:headline
-      ><h3>{{ textForMainContent.headline }}</h3></template
-    ></BaseHeader
-  >
-  <BaseList :list-items="questionsFromSelectedCategory"
-    ><template #list-item="scopedData">{{ scopedData.item }}</template>
-  </BaseList>
+  <main>
+    <BaseHeader :headline="textForPageHeader.headline" />
+    <BaseSelect
+      :description="textForPageHeader.description"
+      :select-options="quizCategories"
+      @change="onCategorySelect"
+    >
+    </BaseSelect>
+    <BaseHeader
+      :headline="textForMainContent.headline"
+      :description="numberOfQuestionsFromSelectedCategory"
+      ><template v-slot:headline
+        ><h3>{{ textForMainContent.headline }}</h3></template
+      ></BaseHeader
+    >
+    <BaseList :list-items="questionsFromSelectedCategory"
+      ><template #list-item="scopedData">{{ scopedData.item }}</template>
+    </BaseList>
+  </main>
 </template>
 
 <script>

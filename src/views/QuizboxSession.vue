@@ -1,15 +1,17 @@
 <template>
-  <BaseHeader :headline="textForPageHeader.headline"
-    ><template v-slot:description
-      ><p v-if="sessionUnfinished">
-        <span>{{ textForPageHeader.description }}</span>
-        <span>{{ displayCurrentQuestionCount }}</span>
-      </p>
-      <p v-else>{{ "Session finished" }}</p></template
-    ></BaseHeader
-  >
-  <p>{{ currentQuestion }}</p>
-  <BaseButton :btnTxt="btnTxt" @click="navigateThroughSession" />
+  <main>
+    <BaseHeader :headline="textForPageHeader.headline"
+      ><template v-slot:description
+        ><p v-if="sessionUnfinished">
+          <span>{{ textForPageHeader.description }}</span>
+          <span>{{ displayCurrentQuestionCount }}</span>
+        </p>
+        <p v-else>{{ "Session finished" }}</p></template
+      ></BaseHeader
+    >
+    <p>{{ currentQuestion }}</p>
+    <BaseButton :btnTxt="btnTxt" @click="navigateThroughSession" />
+  </main>
 </template>
 
 <script>

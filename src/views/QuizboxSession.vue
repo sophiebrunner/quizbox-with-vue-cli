@@ -34,7 +34,7 @@ export default {
 
   computed: {
     questionsFromSelectedCategories() {
-      return this.$store.getters.randomQuestionsFromSelectedCategories;
+      return this.$store.state.questionsForSessions;
     },
     currentQuestionIndex() {
       return this.$store.state.currentQuestionIndex;
@@ -59,7 +59,7 @@ export default {
     },
     currentQuestion() {
       return this.sessionUnfinished
-        ? this.questionsFromSelectedCategories[this.currentQuestionIndex]
+        ? this.$store.state.currentQuestion
         : "Congratulations! You finished the Quizbox session.";
     },
     btnTxt() {
@@ -69,13 +69,9 @@ export default {
 
   methods: {
     navigateThroughSession() {
-      if (this.sessionUnfinished) {
-        this.$store.commit("incrementCurrentQuestionIndex");
-        localStorage.setItem("currentQuestionIndex", this.currentQuestionIndex);
-        localStorage.setItem("currentQuestion", this.currentQuestion);
-      } else {
-        this.$router.push({ name: "quizbox" });
-      }
+      this.sessionUnfinished
+        ? this.$store.commit("updateQuizboxSession")
+        : this.$store.commit("finishQuizboxSession");
     },
   },
 };

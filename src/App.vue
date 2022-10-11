@@ -32,7 +32,7 @@
 export default {
   data() {
     return {
-      showNav: true,
+      showNav: false,
     };
   },
   methods: {
@@ -41,10 +41,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("fetchDataFromApi");
-    this.$store.dispatch("getCurrentQuestionIndexFromLocalStorage");
-    this.$store.dispatch("getSelectedCategoriesFromLocalStorage");
-    this.$store.dispatch("getSelectedNumberFromLocalStorage");
+    this.$store.dispatch("initQuizbox");
   },
 };
 </script>
@@ -74,6 +71,16 @@ export default {
 body {
   margin: 0 auto;
   max-width: 100vw;
+}
+main {
+}
+@media screen and (min-width: 992px) {
+  #app {
+    display: flex;
+  }
+  .page-header {
+    width: 20vw;
+  }
 }
 #app {
   font-family: "Source Sans Pro", sans-serif;

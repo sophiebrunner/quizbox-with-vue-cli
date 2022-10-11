@@ -1,38 +1,40 @@
 <template>
-  <BaseHeader :headline="textForPageHeader.headline" />
-  <BaseSelect
-    :description="textForPageHeader.description"
-    :select-options="nrOfQuestions"
-    @change="onNrOfQuestionsSelect"
-  >
-    <template #select-option="scopedData">{{
-      scopedData.option.value + " Questions"
-    }}</template>
-  </BaseSelect>
-  <BaseHeader
-    :headline="textForMainContent.headline"
-    :description="'0' + this.quizData.length"
-    ><template v-slot:headline
-      ><h3>{{ textForMainContent.headline }}</h3></template
-    ></BaseHeader
-  >
-  <BaseList :list-items="quizData"
-    ><template #list-item="scopedData"
-      ><input
-        type="checkbox"
-        :id="scopedData.item.category"
-        :value="scopedData.item.category"
-        v-model="selectedCategories"
-      />
-      <label :for="scopedData.item.category"
-        ><span>{{ scopedData.item.categoryLabel }}</span> -
-        <span>{{
-          scopedData.item.questions.length + " Questions"
-        }}</span></label
-      >
-    </template>
-  </BaseList>
-  <BaseButton :btnTxt="btnTxt" @click="onStartQuizbox"></BaseButton>
+  <main>
+    <BaseHeader :headline="textForPageHeader.headline" />
+    <BaseSelect
+      :description="textForPageHeader.description"
+      :select-options="nrOfQuestions"
+      @change="onNrOfQuestionsSelect"
+    >
+      <template #select-option="scopedData">{{
+        scopedData.option.value + " Questions"
+      }}</template>
+    </BaseSelect>
+    <BaseHeader
+      :headline="textForMainContent.headline"
+      :description="'0' + this.quizData.length"
+      ><template v-slot:headline
+        ><h3>{{ textForMainContent.headline }}</h3></template
+      ></BaseHeader
+    >
+    <BaseList :list-items="quizData"
+      ><template #list-item="scopedData"
+        ><input
+          type="checkbox"
+          :id="scopedData.item.category"
+          :value="scopedData.item.category"
+          v-model="selectedCategories"
+        />
+        <label :for="scopedData.item.category"
+          ><span>{{ scopedData.item.categoryLabel }}</span> -
+          <span>{{
+            scopedData.item.questions.length + " Questions"
+          }}</span></label
+        >
+      </template>
+    </BaseList>
+    <BaseButton :btnTxt="btnTxt" @click="onStartQuizbox"></BaseButton>
+  </main>
 </template>
 
 <script>
@@ -82,12 +84,11 @@ export default {
     },
     onStartQuizbox() {
       if (this.selectedCategories.length > 0) {
-        this.$store.commit("setSelectedCategories", this.selectedCategories);
-        this.$store.commit("changeSelectedNr", this.selectedNr);
-        this.$store.commit("setCurrentQuestionIndex", 0);
-        localStorage.setItem("selectedCategories", this.selectedCategories);
-        localStorage.setItem("selectedNr", this.selectedNr);
-        this.$router.push({ name: "session" });
+        const sessionParams = {
+          selectedCategories: this.selectedCategories,
+          selectedNr: this.selectedNr,
+        };
+        this.$store.commit("startQuizboxSession", sessionParams);
       } else {
         alert("Please select at least one question area");
       }

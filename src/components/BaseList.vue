@@ -30,7 +30,7 @@ export default {
 
 <style>
 ul {
-  text-align: left;
+  _text-align: left;
   list-style: none;
   _padding-left: 0;
 }

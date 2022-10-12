@@ -1,6 +1,6 @@
 <template>
   <slot />
-  <label for="select-option">{{ description }}</label>
+  <label for="select-option" :class="classesForLabel">{{ description }}</label>
   <select id="select-option" @change="$emit('change', $event.target.value)">
     <option
       v-for="option in selectOptions"
@@ -15,6 +15,11 @@
 <script>
 export default {
   name: "BaseSelect",
+  data() {
+    return {
+      classesForLabel: ["text--montserrat", "text--small"],
+    };
+  },
   props: {
     selectOption: {
       type: String,

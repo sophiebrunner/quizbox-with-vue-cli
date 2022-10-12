@@ -1,40 +1,43 @@
 <template>
-  <main>
-    <BaseHeader :headline="textForPageHeader.headline" />
-    <BaseSelect
-      :description="textForPageHeader.description"
-      :select-options="nrOfQuestions"
-      @change="onNrOfQuestionsSelect"
-    >
-      <template #select-option="scopedData">{{
-        scopedData.option.value + " Questions"
-      }}</template>
-    </BaseSelect>
-    <BaseHeader
-      :headline="textForMainContent.headline"
-      :description="'0' + this.quizData.length"
-      ><template v-slot:headline
-        ><h3>{{ textForMainContent.headline }}</h3></template
-      ></BaseHeader
-    >
-    <BaseList :list-items="quizData"
-      ><template #list-item="scopedData"
-        ><input
+  <BaseHeader :headline="textForPageHeader.headline" />
+  <BaseSelect
+    :description="textForPageHeader.description"
+    :select-options="nrOfQuestions"
+    @change="onNrOfQuestionsSelect"
+  >
+    <template #select-option="scopedData">{{
+      scopedData.option.value + " Questions"
+    }}</template>
+  </BaseSelect>
+  <BaseHeader :headline="textForMainContent.headline"
+    ><template v-slot:headline
+      ><div class="flex-container">
+        <h3 :class="classesForHeadline">{{ textForMainContent.headline }}</h3>
+        <p :class="classesForHeadline">{{ nrOfQuizData }}</p>
+      </div></template
+    ></BaseHeader
+  >
+  <BaseList :list-items="quizData"
+    ><template #list-item="scopedData">
+      <label :for="scopedData.item.category" class="container">
+        <input
           type="checkbox"
           :id="scopedData.item.category"
           :value="scopedData.item.category"
           v-model="selectedCategories"
+          class="checkbox"
         />
-        <label :for="scopedData.item.category"
-          ><span>{{ scopedData.item.categoryLabel }}</span> -
-          <span>{{
-            scopedData.item.questions.length + " Questions"
-          }}</span></label
-        >
-      </template>
-    </BaseList>
-    <BaseButton :btnTxt="btnTxt" @click="onStartQuizbox"></BaseButton>
-  </main>
+        <span class="checkmark"></span>
+        <p :class="classesForCategoryLabel">
+          {{ scopedData.item.categoryLabel }}
+        </p>
+        <p :class="classesForNrOfQuestions">
+          {{ scopedData.item.questions.length + " Questions" }}
+        </p>
+      </label>
+    </template>
+  </BaseList>
+  <BaseButton :btnTxt="btnTxt" @click="onStartQuizbox"></BaseButton>
 </template>
 
 <script>
@@ -66,6 +69,14 @@ export default {
       selectedNr: 10,
       selectedCategories: [],
       btnTxt: "Start Quizbox",
+      classesForHeadline: ["text--montserrat", "text--regular"],
+      classesForCategoryLabel: ["text--sourcesanspro", "text--regular"],
+      classesForNrOfQuestions: [
+        "text--extraslim",
+        "text--extrasmall",
+        "text--sourcesanspro",
+        "text--regular",
+      ],
     };
   },
 
@@ -75,6 +86,9 @@ export default {
     },
     currentQuestionIndex() {
       return this.$state.currentQuestionIndex;
+    },
+    nrOfQuizData() {
+      return "0" + this.quizData.length;
     },
   },
 

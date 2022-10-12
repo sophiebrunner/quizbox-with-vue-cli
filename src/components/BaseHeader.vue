@@ -1,19 +1,31 @@
 <template>
   <slot :headline="headline" name="headline"
-    ><h2>{{ headline }}</h2></slot
+    ><h2 :class="classesForHeadline">
+      {{ headline }}
+    </h2></slot
   >
   <slot :description="description" name="description">
-    <p>{{ description }}</p></slot
+    <p class="description">{{ description }}</p></slot
   >
 </template>
 
 <script>
 export default {
   name: "BaseHeader",
+  data() {
+    return {
+      classesForHeadline: [
+        "text--big",
+        "text--primary-colored",
+        "text--montserrat",
+        "text--uppercase",
+      ],
+    };
+  },
   props: {
     headline: {
       type: String,
-      required: true,
+      required: false,
     },
     description: {
       required: false,

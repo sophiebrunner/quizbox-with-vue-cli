@@ -1,23 +1,24 @@
 <template>
-  <main>
-    <BaseHeader :headline="textForPageHeader.headline" />
-    <BaseSelect
-      :description="textForPageHeader.description"
-      :select-options="quizCategories"
-      @change="onCategorySelect"
-    >
-    </BaseSelect>
-    <BaseHeader
-      :headline="textForMainContent.headline"
-      :description="numberOfQuestionsFromSelectedCategory"
-      ><template v-slot:headline
-        ><h3>{{ textForMainContent.headline }}</h3></template
-      ></BaseHeader
-    >
-    <BaseList :list-items="questionsFromSelectedCategory"
-      ><template #list-item="scopedData">{{ scopedData.item }}</template>
-    </BaseList>
-  </main>
+  <BaseHeader :headline="textForPageHeader.headline" />
+  <BaseSelect
+    :description="textForPageHeader.description"
+    :select-options="quizCategories"
+    @change="onCategorySelect"
+  >
+  </BaseSelect>
+  <BaseHeader :headline="textForMainContent.headline"
+    ><template v-slot:headline
+      ><div class="flex-container">
+        <h3 :class="classesForHeadline">{{ textForMainContent.headline }}</h3>
+        <p :class="classesForHeadline">
+          {{ numberOfQuestionsFromSelectedCategory }}
+        </p>
+      </div></template
+    ></BaseHeader
+  >
+  <BaseList :list-items="questionsFromSelectedCategory"
+    ><template #list-item="scopedData">{{ scopedData.item }}</template>
+  </BaseList>
 </template>
 
 <script>
@@ -39,6 +40,7 @@ export default {
         headline: "Questions from the chapter",
       },
       selectedCategory: "basics-html-css",
+      classesForHeadline: ["text--montserrat", "text--regular"],
     };
   },
 

@@ -1,17 +1,15 @@
 <template>
-  <main>
-    <BaseHeader :headline="textForPageHeader.headline"
-      ><template v-slot:description
-        ><p v-if="sessionUnfinished">
-          <span>{{ textForPageHeader.description }}</span>
-          <span>{{ displayCurrentQuestionCount }}</span>
-        </p>
-        <p v-else>{{ "Session finished" }}</p></template
-      ></BaseHeader
-    >
-    <p>{{ currentQuestion }}</p>
-    <BaseButton :btnTxt="btnTxt" @click="navigateThroughSession" />
-  </main>
+  <BaseHeader :headline="textForPageHeader.headline"
+    ><template v-slot:description
+      ><div v-if="sessionUnfinished" class="flex-container">
+        <p>{{ textForPageHeader.description }}</p>
+        <p>{{ displayCurrentQuestionCount }}</p>
+      </div>
+      <p v-else>{{ "Session finished" }}</p></template
+    ></BaseHeader
+  >
+  <p :class="classesForQuestions">{{ currentQuestion }}</p>
+  <BaseButton :btnTxt="btnTxt" @click="navigateThroughSession" />
 </template>
 
 <script>
@@ -31,6 +29,11 @@ export default {
         headline: "Quizbox Session",
         description: "Question count",
       },
+      classesForQuestions: [
+        "text--centered",
+        "text--large",
+        "text--sourcesanspro",
+      ],
     };
   },
 

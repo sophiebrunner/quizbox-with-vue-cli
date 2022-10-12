@@ -3,12 +3,21 @@
   font-family: "Source Sans Pro";
   src: local("Source Sans Pro"),
     url(./fonts/Source_Sans_Pro/SourceSansPro-SemiBold.ttf) format("truetype");
+  font-weight: 600;
+}
+/* Source Sans Pro Slim 400 */
+@font-face {
+  font-family: "Source Sans Pro";
+  src: local("Source Sans Pro"),
+    url(./fonts/Source_Sans_Pro/SourceSansPro-ExtraLight.ttf) format("truetype");
+  font-weight: 400;
 }
 /* Montserrat SemiBold 600 */
 @font-face {
   font-family: "Montserrat";
   src: local("Montserrat"),
     url(./fonts/Montserrat/static/Montserrat-SemiBold.ttf) format("truetype");
+  font-weight: 600;
 }
 
 /* General styling */
@@ -219,7 +228,7 @@ nav a.router-link-exact-active {
 .container .checkmark::after {
   left: 9px;
   top: 5px;
-  width: 5px;
+  width: 7px;
   height: 10px;
   border: solid var(--clr-primary);
   border-width: 0 3px 3px 0;
@@ -230,10 +239,9 @@ nav a.router-link-exact-active {
 .checkbox:checked {
   background-color: var(--clr-primary);
 }
-.container {
+.checkbox-container {
   display: block;
   position: relative;
-  padding-left: 20px;
   margin-bottom: 12px;
   cursor: pointer;
   font-size: 22px;
@@ -241,6 +249,10 @@ nav a.router-link-exact-active {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+.checkbox-wrapper {
+  display: flex;
+  justify-content: center;
 }
 .flex-container {
   align-items: center;
@@ -250,7 +262,8 @@ nav a.router-link-exact-active {
 .grid-container {
   align-items: center;
   display: grid;
-  grid-template-columns: 20% 80%;
+  grid-template-columns: min-content auto;
+  gap: 36px;
 }
 .text--big {
   font-size: 18px;
@@ -259,6 +272,7 @@ nav a.router-link-exact-active {
   text-align: center;
 }
 .text--extraslim {
+  font-family: var(--font-sourcesanspro);
   font-weight: 400;
 }
 .text--extrasmall {
@@ -278,6 +292,9 @@ nav a.router-link-exact-active {
 }
 .text--regular {
   font-size: 16px;
+}
+.text--semibold {
+  font-weight: 600;
 }
 .text--slim {
   font-weight: 500;

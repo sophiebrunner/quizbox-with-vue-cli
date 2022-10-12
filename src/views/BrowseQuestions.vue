@@ -73,3 +73,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+li {
+  font-family: var(--text-sourcesanspro);
+  font-weight: 600;
+}
+</style>

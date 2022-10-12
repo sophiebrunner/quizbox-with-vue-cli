@@ -5,7 +5,7 @@
     </h2></slot
   >
   <slot :description="description" name="description">
-    <p class="description">{{ description }}</p></slot
+    <p>{{ description }}</p></slot
   >
 </template>
 
@@ -25,9 +25,10 @@ export default {
   props: {
     headline: {
       type: String,
-      required: false,
+      required: true,
     },
     description: {
+      type: String,
       required: false,
     },
   },

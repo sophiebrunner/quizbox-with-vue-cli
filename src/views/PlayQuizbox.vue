@@ -19,21 +19,28 @@
   >
   <BaseList :list-items="quizData"
     ><template #list-item="scopedData">
-      <label :for="scopedData.item.category" class="container">
-        <input
-          type="checkbox"
-          :id="scopedData.item.category"
-          :value="scopedData.item.category"
-          v-model="selectedCategories"
-          class="checkbox"
-        />
-        <span class="checkmark"></span>
-        <p :class="classesForCategoryLabel">
-          {{ scopedData.item.categoryLabel }}
-        </p>
-        <p :class="classesForNrOfQuestions">
-          {{ scopedData.item.questions.length + " Questions" }}
-        </p>
+      <label
+        :for="scopedData.item.category"
+        class="checkbox-container grid-container"
+      >
+        <div class="checkbox-wrapper">
+          <input
+            type="checkbox"
+            :id="scopedData.item.category"
+            :value="scopedData.item.category"
+            v-model="selectedCategories"
+            class="checkbox"
+          />
+          <span class="checkmark"></span>
+        </div>
+        <div>
+          <p :class="classesForCategoryLabel">
+            {{ scopedData.item.categoryLabel }}
+          </p>
+          <p :class="classesForNrOfQuestions">
+            {{ scopedData.item.questions.length + " Questions" }}
+          </p>
+        </div>
       </label>
     </template>
   </BaseList>
@@ -70,12 +77,15 @@ export default {
       selectedCategories: [],
       btnTxt: "Start Quizbox",
       classesForHeadline: ["text--montserrat", "text--regular"],
-      classesForCategoryLabel: ["text--sourcesanspro", "text--regular"],
+      classesForCategoryLabel: [
+        "text--sourcesanspro",
+        "text--regular",
+        "text--semibold",
+      ],
       classesForNrOfQuestions: [
         "text--extraslim",
         "text--extrasmall",
         "text--sourcesanspro",
-        "text--regular",
       ],
     };
   },

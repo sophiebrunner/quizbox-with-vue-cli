@@ -64,6 +64,9 @@ main {
   display: flex;
   justify-content: space-between;
 }
+.flex-container--menu {
+  display: flex;
+}
 .flex-container--question {
   align-items: center;
   display: flex;
@@ -219,6 +222,7 @@ ul {
 .hamburger-menu-wrapper {
   height: 81px;
   z-index: 1;
+  position: relative;
 }
 .hamburger-menu {
   position: absolute;
@@ -249,42 +253,39 @@ ul {
   transform: rotate(-45deg) translate(-2px, -1px);
   transform-origin: 0 100%;
 }
-
-.hamburger-menu-wrapper {
-  position: relative;
-}
 .nav {
+  color: var(--clr-surface);
+  cursor: pointer;
   font-family: var(--font-montserrat);
   font-size: 16px;
   text-transform: uppercase;
-  color: var(--clr-surface);
-  cursor: pointer;
   transition: transform 0.5s ease-in-out;
   width: 100vw;
-  margin-left: auto;
-  margin-right: auto;
-  _position: relative;
 }
-.nav__list {
+.list-wrapper {
+  position: relative;
   background: var(--clr-secondary);
+  height: 207px;
+  list-style-type: none;
   margin: 0;
   padding-left: 0;
-  padding-top: 4em;
-  list-style-type: none;
-  height: 207px;
 }
-.nav__item {
-  vertical-align: baseline;
+.nav__list {
+  display: flex;
+  flex-direction: column;
+  height: 50%;
+  transform: translate(50%, 50%);
+  width: 50%;
 }
 .nav__item + .nav__item {
-  margin-top: 2em;
+  margin-top: 8px;
 }
 .hidden {
-  transform: translateY(-181px);
+  transform: translateY(-190px);
   z-index: 0;
 }
 .active {
-  transform: translateY(0);
+  transform: translateY(-7px);
 }
 .menu__triangle {
   width: 0;
@@ -301,7 +302,7 @@ ul {
 nav a {
   border-bottom: 3px solid var(--clr-surface);
   text-decoration: none;
-  padding: 1em;
+  float: left;
 }
 nav a.router-link-exact-active {
   background-color: var(--clr-primary);

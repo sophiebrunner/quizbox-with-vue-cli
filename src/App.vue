@@ -10,18 +10,20 @@
       <div class="menu__triangle menu__triangle--primary"></div>
     </div>
     <nav class="nav" :class="{ active: showNav, hidden: !showNav }">
-      <ul class="nav__list">
-        <li class="nav__item">
-          <router-link :to="{ name: 'quizbox' }" class="text--light-colored"
-            >Play Quizbox</router-link
-          >
-        </li>
-        <li class="nav__item">
-          <router-link :to="{ name: 'questions' }" class="text--light-colored"
-            >Browse Questions</router-link
-          >
-        </li>
-      </ul>
+      <div class="list-wrapper">
+        <ul class="nav__list">
+          <li class="nav__item">
+            <router-link :to="{ name: 'quizbox' }" class="text--light-colored"
+              >Play Quizbox</router-link
+            >
+          </li>
+          <li class="nav__item">
+            <router-link :to="{ name: 'questions' }" class="text--light-colored"
+              >Browse Questions</router-link
+            >
+          </li>
+        </ul>
+      </div>
       <div class="menu__triangle menu__triangle--secondary"></div>
     </nav>
   </header>

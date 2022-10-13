@@ -11,15 +11,15 @@
   </BaseSelect>
   <BaseHeader :headline="textForMainContent.headline"
     ><template v-slot:headline
-      ><div class="flex-container">
+      ><div class="flex-container--headline">
         <h3>{{ textForMainContent.headline }}</h3>
         <p>{{ nrOfQuizData }}</p>
       </div></template
     ></BaseHeader
   >
-  <BaseList :list-items="quizData" class="list-items"
+  <BaseList :list-items="quizData" class="list-item"
     ><template #list-item="scopedData">
-      <div class="grid-container">
+      <div class="checklists list-item list-item--checklist">
         <input
           type="checkbox"
           :id="scopedData.item.category"

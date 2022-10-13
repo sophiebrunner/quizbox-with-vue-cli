@@ -8,7 +8,7 @@
   </BaseSelect>
   <BaseHeader :headline="textForMainContent.headline"
     ><template v-slot:headline
-      ><div class="flex-container">
+      ><div class="flex-container--headline">
         <h3>{{ textForMainContent.headline }}</h3>
         <p>
           {{ numberOfQuestionsFromSelectedCategory }}

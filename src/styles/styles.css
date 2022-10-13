@@ -48,18 +48,26 @@ main {
   margin-top: 36px;
   padding: 0 32px;
 }
+.list-item + button {
+  margin-top: 60px;
+}
 .page-header {
   height: 109px;
 }
-#select-option + .flex-container {
+#select-option + .flex-container--headline {
   margin-top: 60px;
 }
 
 /* Flex & Grid */
-.flex-container {
+.flex-container--headline {
   align-items: center;
   display: flex;
   justify-content: space-between;
+}
+.checklists {
+  align-items: center;
+  display: flex;
+  gap: 36px;
 }
 .grid-container {
   align-items: center;
@@ -88,6 +96,9 @@ h3,
 h3 ~ p {
   font-family: var(--font-montserrat);
   font-size: 16px;
+}
+p + p {
+  margin-top: 8px;
 }
 
 /* Buttons */
@@ -123,22 +134,26 @@ button:hover {
   display: inline-block;
   cursor: pointer;
   height: 27px;
-  width: 27px;
+  margin-left: 20px;
   position: relative;
+  width: 27px;
 }
 .checkbox:checked::after {
   content: "\2713";
   color: var(--clr-primary);
-  font-size: 16px;
   height: 50%;
   position: absolute;
-  width: 50%;
   transform: translate(50%, 25%);
+  width: 50%;
 }
 
 /* List elements */
 
-.list-item li + .list-item li {
+.list-item--checklist {
+  border-bottom: 1px solid var(--clr-text);
+  padding: 16px 0;
+}
+.list-item li + li {
   margin-top: 12px;
 }
 .list-item--question li {

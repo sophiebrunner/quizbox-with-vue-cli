@@ -1,14 +1,23 @@
 <template>
-  <BaseHeader :headline="textForPageHeader.headline"
-    ><template v-slot:description
-      ><div v-if="sessionUnfinished" class="flex-container">
-        <p>{{ textForPageHeader.description }}</p>
-        <p>{{ displayCurrentQuestionCount }}</p>
-      </div>
-      <p v-else>{{ "Session finished" }}</p></template
-    ></BaseHeader
+  <BaseHeader
+    :headline="textForPageHeader.headline"
+    class="grid-container--headline"
   >
-  <p :class="classesForQuestions">{{ currentQuestion }}</p>
+    <template v-slot:description>
+      <p v-if="sessionUnfinished" class="grid-area--description">
+        {{ textForPageHeader.description }}
+      </p>
+      <p v-if="sessionUnfinished" class="grid-area--number">
+        {{ displayCurrentQuestionCount }}
+      </p>
+      <p v-else class="grid-area--description">
+        {{ "Session finished" }}
+      </p></template
+    >
+  </BaseHeader>
+  <div class="flex-container--question">
+    <p :class="classesForQuestions">{{ currentQuestion }}</p>
+  </div>
   <BaseButton :btnTxt="btnTxt" @click="navigateThroughSession" />
 </template>
 
@@ -32,6 +41,7 @@ export default {
       classesForQuestions: [
         "text--centered",
         "text--large",
+        "text--semibold",
         "text--sourcesanspro",
       ],
     };

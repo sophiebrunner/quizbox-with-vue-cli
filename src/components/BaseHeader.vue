@@ -1,12 +1,14 @@
 <template>
-  <slot :headline="headline" name="headline"
-    ><h2 :class="classesForHeadline">
-      {{ headline }}
-    </h2></slot
-  >
-  <slot :description="description" name="description">
-    <p>{{ description }}</p></slot
-  >
+  <header>
+    <slot :headline="headline" name="headline"
+      ><h2 :class="classesForHeadline">
+        {{ headline }}
+      </h2></slot
+    >
+    <slot :description="description" name="description">
+      <p>{{ description }}</p></slot
+    >
+  </header>
 </template>
 
 <script>

@@ -9,14 +9,16 @@
   <BaseHeader :headline="textForMainContent.headline"
     ><template v-slot:headline
       ><div class="flex-container">
-        <h3 :class="classesForHeadline">{{ textForMainContent.headline }}</h3>
-        <p :class="classesForHeadline">
+        <h3>{{ textForMainContent.headline }}</h3>
+        <p>
           {{ numberOfQuestionsFromSelectedCategory }}
         </p>
       </div></template
     ></BaseHeader
   >
-  <BaseList :list-items="questionsFromSelectedCategory"
+  <BaseList
+    :list-items="questionsFromSelectedCategory"
+    class="list-item list-item--question"
     ><template #list-item="scopedData">{{ scopedData.item }}</template>
   </BaseList>
 </template>
@@ -40,7 +42,6 @@ export default {
         headline: "Questions from the chapter",
       },
       selectedCategory: "basics-html-css",
-      classesForHeadline: ["text--montserrat", "text--regular"],
     };
   },
 
@@ -73,10 +74,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-li {
-  font-family: var(--text-sourcesanspro);
-  font-weight: 600;
-}
-</style>

@@ -1,3 +1,4 @@
+/* Fonts */
 /* Source Sans Pro SemiBold 600 */
 @font-face {
   font-family: "Source Sans Pro";
@@ -20,7 +21,7 @@
   font-weight: 600;
 }
 
-/* General styling */
+/* Layouting */
 *,
 *::before,
 *::after {
@@ -42,6 +43,30 @@ body {
   max-width: 100vw;
   background: var(--clr-surface);
 }
+main {
+  min-height: calc(100vh - 145px);
+  margin-top: 36px;
+  padding: 0 32px;
+}
+.page-header {
+  height: 109px;
+}
+#select-option + .flex-container {
+  margin-top: 60px;
+}
+
+/* Flex & Grid */
+.flex-container {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+.grid-container {
+  align-items: center;
+  display: grid;
+  grid-template-columns: min-content auto;
+  gap: 36px;
+}
 
 /* Text elements */
 h1,
@@ -59,19 +84,13 @@ h1 {
   height: 95px;
   justify-content: center;
 }
-ul {
-  list-style-type: none;
-  padding-left: 0;
-}
-li {
-  border-bottom: 1px solid var(--clr-text);
-  font-family: var(--font-sourcesanspro);
+h3,
+h3 ~ p {
+  font-family: var(--font-montserrat);
   font-size: 16px;
-  padding: 15px 40px 15px 32px;
 }
-li + li {
-  margin-top: 12px;
-}
+
+/* Buttons */
 button {
   background-color: var(--clr-surface);
   border: 1.75px solid var(--clr-primary);
@@ -85,28 +104,56 @@ button {
   margin: 0;
   padding: 8px 10px;
   right: 50vw;
-  width: 50%;
   transform: translateX(50%);
+  width: 50%;
 }
 button:hover {
-  color: var(--clr-surface);
   background-color: var(--clr-primary);
   box-shadow: none;
-}
-/* Layout */
-.page-header {
-  height: 109px;
-}
-main {
-  min-height: calc(100vh - 145px);
-  margin-top: 36px;
-  padding: 0 32px;
-}
-#select-option + .flex-container {
-  margin-top: 60px;
+  color: var(--clr-surface);
 }
 
-/* Hamburger menu */
+/* Checkboxes */
+.checkbox {
+  all: unset;
+  background-color: var(--clr-surface);
+  border: 1.75px solid var(--clr-primary);
+  border-radius: 2px;
+  box-sizing: border-box;
+  display: inline-block;
+  cursor: pointer;
+  height: 27px;
+  width: 27px;
+  position: relative;
+}
+.checkbox:checked::after {
+  content: "\2713";
+  color: var(--clr-primary);
+  font-size: 16px;
+  height: 50%;
+  position: absolute;
+  width: 50%;
+  transform: translate(50%, 25%);
+}
+
+/* List elements */
+
+.list-item li + .list-item li {
+  margin-top: 12px;
+}
+.list-item--question li {
+  border-bottom: 1px solid var(--clr-text);
+  font-family: var(--font-sourcesanspro);
+  font-size: 16px;
+  font-weight: 600;
+  padding: 15px 40px 15px 32px;
+}
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+/* Menus */
 .hamburger-menu-wrapper {
   height: 81px;
   z-index: 1;
@@ -141,7 +188,6 @@ main {
   transform-origin: 0 100%;
 }
 
-/* Navigation menu */
 .hamburger-menu-wrapper {
   position: relative;
 }
@@ -200,71 +246,6 @@ nav a.router-link-exact-active {
 }
 
 /* Style classes */
-.checkbox {
-  cursor: pointer;
-  height: 0;
-  opacity: 0;
-  position: absolute;
-  width: 0;
-}
-.checkmark {
-  background-color: white;
-  border: 1.75px solid var(--clr-primary);
-  border-radius: 2px;
-  height: 27px;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 27px;
-}
-.checkmark::after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-.container .checkbox:checked ~ .checkmark::after {
-  display: block;
-}
-.container .checkmark::after {
-  left: 9px;
-  top: 5px;
-  width: 7px;
-  height: 10px;
-  border: solid var(--clr-primary);
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-.checkbox:checked {
-  background-color: var(--clr-primary);
-}
-.checkbox-container {
-  display: block;
-  position: relative;
-  margin-bottom: 12px;
-  cursor: pointer;
-  font-size: 22px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-.checkbox-wrapper {
-  display: flex;
-  justify-content: center;
-}
-.flex-container {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-}
-.grid-container {
-  align-items: center;
-  display: grid;
-  grid-template-columns: min-content auto;
-  gap: 36px;
-}
 .text--big {
   font-size: 18px;
 }

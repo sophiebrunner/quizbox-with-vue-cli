@@ -25,7 +25,7 @@
       <div class="menu__triangle menu__triangle--secondary"></div>
     </nav>
   </header>
-  <main @click="slideMenu">
+  <main @click="collapseMenu">
     <router-view />
   </main>
 </template>
@@ -47,7 +47,7 @@ export default {
     toggleMenu() {
       this.showNav = !this.showNav;
     },
-    slideMenu() {
+    collapseMenu() {
       this.showNav = false;
     },
   },
@@ -55,4 +55,10 @@ export default {
     this.$store.dispatch("initQuizbox");
   },
 };
+function collapseMenuAutomatically(showNav) {
+  if (showNav === true) {
+    setTimeout(this.collapseMenu, 5000);
+  }
+}
+collapseMenuAutomatically();
 </script>

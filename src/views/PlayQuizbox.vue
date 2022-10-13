@@ -12,36 +12,30 @@
   <BaseHeader :headline="textForMainContent.headline"
     ><template v-slot:headline
       ><div class="flex-container">
-        <h3 :class="classesForHeadline">{{ textForMainContent.headline }}</h3>
-        <p :class="classesForHeadline">{{ nrOfQuizData }}</p>
+        <h3>{{ textForMainContent.headline }}</h3>
+        <p>{{ nrOfQuizData }}</p>
       </div></template
     ></BaseHeader
   >
-  <BaseList :list-items="quizData"
+  <BaseList :list-items="quizData" class="list-items"
     ><template #list-item="scopedData">
-      <label
-        :for="scopedData.item.category"
-        class="checkbox-container grid-container"
-      >
-        <div class="checkbox-wrapper">
-          <input
-            type="checkbox"
-            :id="scopedData.item.category"
-            :value="scopedData.item.category"
-            v-model="selectedCategories"
-            class="checkbox"
-          />
-          <span class="checkmark"></span>
-        </div>
-        <div>
+      <div class="grid-container">
+        <input
+          type="checkbox"
+          :id="scopedData.item.category"
+          :value="scopedData.item.category"
+          v-model="selectedCategories"
+          class="checkbox"
+        />
+        <label :for="scopedData.item.category">
           <p :class="classesForCategoryLabel">
             {{ scopedData.item.categoryLabel }}
           </p>
           <p :class="classesForNrOfQuestions">
             {{ scopedData.item.questions.length + " Questions" }}
           </p>
-        </div>
-      </label>
+        </label>
+      </div>
     </template>
   </BaseList>
   <BaseButton :btnTxt="btnTxt" @click="onStartQuizbox"></BaseButton>
@@ -76,7 +70,6 @@ export default {
       selectedNr: 10,
       selectedCategories: [],
       btnTxt: "Start Quizbox",
-      classesForHeadline: ["text--montserrat", "text--regular"],
       classesForCategoryLabel: [
         "text--sourcesanspro",
         "text--regular",

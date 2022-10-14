@@ -6,7 +6,7 @@
       </h2></slot
     >
     <slot :description="description" name="description">
-      <p>{{ description }}</p></slot
+      <p v-if="description">{{ description }}</p></slot
     >
   </header>
 </template>

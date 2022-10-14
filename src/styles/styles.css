@@ -59,7 +59,10 @@ main {
   margin-top: 60px;
 }
 .page-header {
+  position: sticky;
   height: 109px;
+  top: 0;
+  z-index: 2;
 }
 #select-option + header {
   margin-top: 60px;
@@ -190,7 +193,7 @@ button:hover {
 .checkbox {
   all: unset;
   background-color: var(--clr-surface);
-  border: 1.75px solid var(--clr-primary);
+  border: 2px solid var(--clr-primary);
   border-radius: 2px;
   box-sizing: border-box;
   display: inline-block;
@@ -199,7 +202,7 @@ button:hover {
   margin-left: 20px;
   position: relative;
   width: 27px;
-  z-index: -1;
+  z-index: 0;
 }
 .checkbox:checked::after {
   content: "\2713";
@@ -234,38 +237,43 @@ ul {
 /* Menus */
 .hamburger-menu-wrapper {
   height: 81px;
-  z-index: 1;
   position: relative;
+  z-index: 1;
 }
 .hamburger-menu {
   cursor: pointer;
+  display: grid;
+  gap: 6px;
+  grid-template-rows: 1fr 1fr 1fr;
+  height: 24px;
+  left: 1.5em;
   position: absolute;
   top: 2em;
-  left: 1.5em;
+  width: 32px;
 }
 .hamburger-menu__icon {
-  display: block;
-  width: 2.5em;
-  height: 0.25em;
   background: var(--clr-surface);
   border-radius: 3px;
-  transform-origin: 0 0.5em 0;
   transition: transform 0.5s cubic-bezier(0.77, 0.2 0.05, 1),
     background 0.5 cubic-bezier(0.77, 0.2 0.05, 1), opacity 0.55s ease;
 }
-.hamburger-menu__icon + .hamburger-menu__icon {
-  margin-top: 0.5em;
+.clicked {
+  _position: relative;
 }
 .clicked:first-child {
-  transform: rotate(45deg) translate(-2px, -1px);
-  transform-origin: 0 0;
+  _position: absolute;
+  transform: rotate(45deg);
+  transform-origin: center;
+  _top: 50;
 }
 .clicked:nth-last-child(2) {
   opacity: 0;
 }
 .clicked:last-child {
-  transform: rotate(-45deg) translate(-2px, -1px);
-  transform-origin: 0 100%;
+  _position: absolute;
+  transform: rotate(-45deg);
+  transform-origin: center;
+  _top: 50;
 }
 .nav {
   color: var(--clr-surface);
@@ -276,7 +284,7 @@ ul {
   transition: transform 0.5s ease-in-out;
   width: 100vw;
 }
-.list-wrapper {
+.nav-list-wrapper {
   position: relative;
   background: var(--clr-secondary);
   height: 207px;
@@ -328,6 +336,49 @@ nav a {
 }
 .nav-item a.router-link-exact-active {
   background-color: var(--clr-primary);
+}
+
+/* Input select */
+.custom-select {
+  align-items: center;
+  background-color: var(--clr-surface);
+  border: 2px solid var(--clr-primary);
+  border-radius: 2px;
+  cursor: pointer;
+  display: grid;
+  font-family: var(--font-sourcesanspro);
+  font-size: 16px;
+  font-weight: inherit;
+  height: 36px;
+  grid-template-areas: "select";
+  position: relative;
+  width: 100%;
+}
+select {
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  cursor: inherit;
+  display: flex;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  grid-area: select;
+  margin: 0;
+  outline: none;
+  padding: 8px 20px;
+  cursor: inherit;
+  width: 100%;
+}
+.custom-select::after {
+  background-color: var(--clr-primary);
+  color: var(--clr-surface);
+  content: "";
+  clip-path: polygon(50% 80%, 91% 43%, 100% 52%, 50% 100%, 0% 50%, 8% 40%);
+  grid-area: select;
+  height: 10px;
+  justify-self: end;
+  width: 5px;
 }
 
 /* Style classes */

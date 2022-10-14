@@ -1,15 +1,17 @@
 <template>
   <slot />
   <label for="select-option" :class="classesForLabel">{{ description }}</label>
-  <select id="select-option" @change="$emit('change', $event.target.value)">
-    <option
-      v-for="option in selectOptions"
-      :key="option.id"
-      :value="option.value"
-    >
-      <slot :option="option" name="select-option">{{ option.label }}</slot>
-    </option>
-  </select>
+  <div class="custom-select">
+    <select id="select-option" @change="$emit('change', $event.target.value)">
+      <option
+        v-for="option in selectOptions"
+        :key="option.id"
+        :value="option.value"
+      >
+        <slot :option="option" name="select-option">{{ option.label }}</slot>
+      </option>
+    </select>
+  </div>
 </template>
 
 <script>

@@ -10,7 +10,7 @@
       <div class="menu__triangle menu__triangle--primary"></div>
     </div>
     <nav class="nav" :class="{ active: showNav, hidden: !showNav }">
-      <div class="list-wrapper">
+      <div class="nav-list-wrapper">
         <ul class="nav__list">
           <li class="nav__item">
             <router-link :to="{ name: 'quizbox' }" class="text--light-colored"
@@ -20,6 +20,11 @@
           <li class="nav__item">
             <router-link :to="{ name: 'questions' }" class="text--light-colored"
               >Browse Questions</router-link
+            >
+          </li>
+          <li class="nav__item" v-if="sessionActive">
+            <router-link :to="{ name: 'session' }" class="text--light-colored"
+              >Resume Session</router-link
             >
           </li>
         </ul>
@@ -37,14 +42,12 @@ export default {
   data() {
     return {
       showNav: false,
+      sessionActive: true,
     };
   },
   methods: {
     toggleMenu() {
       this.showNav = !this.showNav;
-      if (this.showNav === true) {
-        setTimeout(() => (this.showNav = false), 3000);
-      }
     },
     collapseMenu() {
       this.showNav = false;
@@ -54,10 +57,4 @@ export default {
     this.$store.dispatch("initQuizbox");
   },
 };
-function collapseMenuAutomatically(showNav) {
-  if (showNav === true) {
-    setTimeout(this.collapseMenu, 5000);
-  }
-}
-collapseMenuAutomatically();
 </script>

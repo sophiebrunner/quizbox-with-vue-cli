@@ -6,7 +6,7 @@
         <span class="hamburger-menu__icon" :class="{ clicked: showNav }"></span>
         <span class="hamburger-menu__icon" :class="{ clicked: showNav }"></span>
       </nav>
-      <h1 :class="classesForHeadline">Quizbox</h1>
+      <h1>Quizbox</h1>
       <div class="menu__triangle menu__triangle--primary"></div>
     </div>
     <nav class="nav" :class="{ active: showNav, hidden: !showNav }">
@@ -37,17 +37,14 @@ export default {
   data() {
     return {
       showNav: false,
-      classesForHeadline: [
-        "text--light-colored",
-        "text--montserrat",
-        "text--regular",
-        "text--uppercase",
-      ],
     };
   },
   methods: {
     toggleMenu() {
       this.showNav = !this.showNav;
+      if (this.showNav === true) {
+        setTimeout(() => (this.showNav = false), 3000);
+      }
     },
     collapseMenu() {
       this.showNav = false;

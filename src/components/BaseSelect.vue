@@ -17,7 +17,7 @@ export default {
   name: "BaseSelect",
   data() {
     return {
-      classesForLabel: ["text--montserrat", "text--small"],
+      classesForLabel: ["text--montserrat", "text--semibold", "text--small"],
     };
   },
   props: {

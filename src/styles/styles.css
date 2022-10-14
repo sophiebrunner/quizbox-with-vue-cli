@@ -20,6 +20,13 @@
     url(./fonts/Montserrat/static/Montserrat-SemiBold.ttf) format("truetype");
   font-weight: 600;
 }
+/* Montserrat Regular 500 */
+@font-face {
+  font-family: "Montserrat";
+  src: local("Montserrat"),
+    url(./fonts/Montserrat/static/Montserrat-Regular.ttf) format("truetype");
+  font-weight: 500;
+}
 
 /* Layouting */
 *,
@@ -114,10 +121,15 @@ p {
 }
 h1 {
   align-items: center;
+  color: var(--clr-surface);
   background-color: var(--clr-primary);
   display: flex;
+  font-family: var(--font-montserrat);
+  font-size: 16px;
+  font-weight: 600;
   height: 95px;
   justify-content: center;
+  text-transform: uppercase;
 }
 h2 {
   color: var(--clr-primary);
@@ -133,6 +145,7 @@ h3,
 h3 ~ p {
   font-family: var(--font-montserrat);
   font-size: 16px;
+  font-weight: 600;
 }
 p + p {
   margin-top: 8px;
@@ -225,6 +238,7 @@ ul {
   position: relative;
 }
 .hamburger-menu {
+  cursor: pointer;
   position: absolute;
   top: 2em;
   left: 1.5em;
@@ -271,21 +285,21 @@ ul {
   padding-left: 0;
 }
 .nav__list {
-  display: flex;
-  flex-direction: column;
-  height: 50%;
-  transform: translate(50%, 50%);
-  width: 50%;
+  position: absolute;
+  transform: translate(50%, -50%);
+  right: 50%;
+  top: 50%;
+  width: 50vw;
 }
 .nav__item + .nav__item {
-  margin-top: 8px;
+  margin-top: 16px;
 }
 .hidden {
-  transform: translateY(-190px);
+  transform: translateY(-181px);
   z-index: 0;
 }
 .active {
-  transform: translateY(-7px);
+  transform: translateY(0);
 }
 .menu__triangle {
   width: 0;
@@ -299,12 +313,20 @@ ul {
 .menu__triangle--secondary {
   border-top: 14px solid var(--clr-secondary);
 }
-nav a {
-  border-bottom: 3px solid var(--clr-surface);
-  text-decoration: none;
-  float: left;
+.nav__item {
+  border-bottom: 2px solid var(--clr-surface);
+  padding: 8px 0;
+  position: relative;
+  right: 50%;
+  transform: translateX(50%);
 }
-nav a.router-link-exact-active {
+nav a {
+  font-family: var(--font-montserrat);
+  font-size: 16px;
+  font-weight: 15px;
+  text-decoration: none;
+}
+.nav-item a.router-link-exact-active {
   background-color: var(--clr-primary);
 }
 

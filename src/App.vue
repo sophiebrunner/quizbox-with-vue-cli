@@ -42,8 +42,12 @@ export default {
   data() {
     return {
       showNav: false,
-      sessionActive: true,
     };
+  },
+  computed: {
+    sessionActive() {
+      return this.$store.state.sessionActive;
+    },
   },
   methods: {
     toggleMenu() {
@@ -54,7 +58,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("initQuizbox");
+    this.$store.dispatch("fetchDataFromApi");
   },
 };
 </script>

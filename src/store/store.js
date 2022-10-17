@@ -10,6 +10,7 @@ const defaultState = {
   questionsForSessions: [],
   currentQuestionIndex: 0,
   currentQuestion: "",
+  sessionActive: false,
 };
 
 const store = createStore({
@@ -29,6 +30,7 @@ const store = createStore({
       state.currentQuestionIndex = 0;
       state.currentQuestion =
         state.questionsForSessions[state.currentQuestionIndex];
+      state.sessionActive = true;
       /* Set localStorage */
       localStorage.setItem(
         "questionsForSessions",
@@ -38,7 +40,17 @@ const store = createStore({
         "currentQuestionIndex",
         JSON.stringify(state.currentQuestionIndex)
       );
+      localStorage.setItem(
+        "sessionActive",
+        JSON.stringify(state.sessionActive)
+      );
       router.push({ name: "session" });
+    },
+    updateQuizboxSession(state) {
+      state.currentQuestionIndex++;
+      state.currentQuestion =
+        state.questionsForSessions[state.currentQuestionIndex];
+      localStorage.setItem("currentQuestionIndex", state.currentQuestionIndex);
     },
     finishQuizboxSession(state) {
       // Reset data for next session
@@ -49,12 +61,14 @@ const store = createStore({
         questionsForSessions,
         currentQuestionIndex,
         currentQuestion,
+        sessionActive,
       } = defaultState;
       state.selectedNr = selectedNr;
       state.selectedCategories = selectedCategories;
       state.questionsForSessions = questionsForSessions;
       state.currentQuestionIndex = currentQuestionIndex;
       state.currentQuestion = currentQuestion;
+      state.sessionActive = sessionActive;
       localStorage.clear();
       router.push({ name: "quizbox" });
     },
@@ -67,27 +81,11 @@ const store = createStore({
       );
       state.currentQuestion =
         state.questionsForSessions[state.currentQuestionIndex];
-    },
-    updateQuizboxSession(state) {
-      state.currentQuestionIndex++;
-      state.currentQuestion =
-        state.questionsForSessions[state.currentQuestionIndex];
-      localStorage.setItem("currentQuestionIndex", state.currentQuestionIndex);
+      state.sessionActive = JSON.parse(localStorage.getItem("sessionActive"));
     },
   },
   /* Initial data loading */
   actions: {
-    initQuizbox(context) {
-      // Load data from API
-      context.dispatch("fetchDataFromApi");
-      // Check in localStorage: Is session still active? If yes, restore session
-      if (
-        JSON.parse(localStorage.getItem("currentQuestionIndex")) <
-        JSON.parse(localStorage.getItem("questionsForSessions").length)
-      ) {
-        context.commit("restoreQuizboxSession");
-      }
-    },
     async fetchDataFromApi(context) {
       const categoryLabels = new Map([
         ["basics-html-css", "Web Dev Foundation"],

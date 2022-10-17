@@ -89,5 +89,11 @@ export default {
         : this.$store.commit("finishQuizboxSession");
     },
   },
+
+  created() {
+    if (localStorage.getItem("questionsForSessions")) {
+      this.$store.commit("restoreQuizboxSession");
+    }
+  },
 };
 </script>

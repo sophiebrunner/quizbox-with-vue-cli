@@ -171,6 +171,7 @@ button {
   background-color: var(--clr-surface);
   border: 1.75px solid var(--clr-primary);
   border-radius: 2px;
+  /* 💅 Refactor: box-shadow mit runden Kanten */
   box-shadow: 3.5px 3.5px 0 var(--clr-primary);
   color: var(--clr-primary);
   cursor: pointer;
@@ -257,6 +258,7 @@ ul {
   transition: transform 0.5s cubic-bezier(0.77, 0.2 0.05, 1),
     background 0.5 cubic-bezier(0.77, 0.2 0.05, 1), opacity 0.55s ease;
 }
+/* 🐞 Debug: X nicht aufeinander */
 .clicked {
   _position: relative;
 }
@@ -339,46 +341,39 @@ nav a {
 }
 
 /* Input select */
-.custom-select {
-  align-items: center;
+.select-wrapper {
+  position: relative;
+}
+select {
   background-color: var(--clr-surface);
   border: 2px solid var(--clr-primary);
   border-radius: 2px;
-  cursor: pointer;
-  display: grid;
   font-family: var(--font-sourcesanspro);
   font-size: 16px;
-  font-weight: inherit;
-  height: 36px;
-  grid-template-areas: "select";
-  position: relative;
-  width: 100%;
-}
-select {
-  appearance: none;
-  background-color: transparent;
-  border: none;
-  cursor: inherit;
-  display: flex;
-  font-family: inherit;
-  font-size: inherit;
   font-weight: 600;
-  grid-area: select;
-  margin: 0;
-  outline: none;
+  height: 36px;
+  /*🐞 Debug: Option wird beschnitten */
   padding: 8px 20px;
-  cursor: inherit;
   width: 100%;
 }
-.custom-select::after {
-  background-color: var(--clr-primary);
-  color: var(--clr-surface);
-  content: "";
-  clip-path: polygon(50% 80%, 91% 43%, 100% 52%, 50% 100%, 0% 50%, 8% 40%);
-  grid-area: select;
-  height: 10px;
-  justify-self: end;
-  width: 5px;
+.icon-wrapper {
+  align-items: center;
+  background-color: var(--clr-secondary);
+  display: flex;
+  inset-block: 0;
+  justify-content: center;
+  margin: 2px;
+  padding: 0.5rem;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  width: 31px;
+}
+.icon {
+  background-color: var(--clr-surface);
+  clip-path: polygon(100% 40%, 50% 100%, 0 40%, 0 0, 50% 60%, 100% 0);
+  height: 100%;
+  width: 100%;
 }
 
 /* Style classes */

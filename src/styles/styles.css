@@ -28,7 +28,7 @@
   font-weight: 500;
 }
 
-/* Layouting */
+/* General Styling + Layout */
 *,
 *::before,
 *::after {
@@ -59,13 +59,10 @@ main {
   margin-top: 60px;
 }
 .page-header {
-  position: sticky;
   height: 109px;
+  position: sticky;
   top: 0;
   z-index: 2;
-}
-#select-option + header {
-  margin-top: 60px;
 }
 
 /* Flex & Grid */
@@ -138,6 +135,7 @@ h2 {
   color: var(--clr-primary);
   font-family: var(--font-montserrat);
   font-size: 18px;
+  margin-bottom: 8px;
   text-transform: uppercase;
 }
 h2 ~ p {
@@ -149,15 +147,17 @@ h3 ~ p {
   font-family: var(--font-montserrat);
   font-size: 16px;
   font-weight: 600;
+  margin-top: 60px;
 }
 p + p {
   margin-top: 8px;
 }
-.flex-container--description p {
+.flex-container--description p,
+.grid-area--description,
+.grid-area--number {
   font-family: var(--font-montserrat);
   font-weight: 600;
   font-size: 14px;
-  margin-top: 0;
 }
 .question {
   font-family: var(--font-sourcesanspro);
@@ -171,7 +171,6 @@ button {
   background-color: var(--clr-surface);
   border: 1.75px solid var(--clr-primary);
   border-radius: 2px;
-  /* 💅 Refactor: box-shadow mit runden Kanten */
   box-shadow: 3.5px 3.5px 0 var(--clr-primary);
   color: var(--clr-primary);
   cursor: pointer;
@@ -194,24 +193,19 @@ button:hover {
 .checkbox {
   all: unset;
   background-color: var(--clr-surface);
-  border: 2px solid var(--clr-primary);
+  border: 1.75px solid var(--clr-primary);
   border-radius: 2px;
   box-sizing: border-box;
-  display: inline-block;
   cursor: pointer;
   height: 27px;
   margin-left: 20px;
-  position: relative;
   width: 27px;
   z-index: 0;
 }
-.checkbox:checked::after {
-  content: "\2713";
-  color: var(--clr-primary);
-  height: 50%;
-  position: absolute;
-  transform: translate(50%, 25%);
-  width: 50%;
+.checkbox:checked {
+  background-image: url("data:image/svg+xml, %3Csvg%20width%3D%2215%22%20height%3D%2211%22%20viewBox%3D%220%200%2015%2011%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M12.5113%200.386317C13.0055%20-0.107939%2013.8069%20-0.107939%2014.3011%200.386317C14.7893%200.874513%2014.7953%201.66231%2014.3191%202.15786L7.58224%2010.5789C7.57251%2010.5911%207.56213%2010.6027%207.55112%2010.6137C7.05686%2011.1079%206.25551%2011.1079%205.76126%2010.6137L1.29538%206.1478C0.801118%205.65355%200.801118%204.8522%201.29538%204.35794C1.78963%203.86368%202.59098%203.86368%203.08524%204.35794L6.61805%207.89075L12.4777%200.424177C12.4881%200.410897%2012.4993%200.398254%2012.5113%200.386317Z%22%20fill%3D%22%238849CF%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 /* List elements */
@@ -255,27 +249,19 @@ ul {
 .hamburger-menu__icon {
   background: var(--clr-surface);
   border-radius: 3px;
-  transition: transform 0.5s cubic-bezier(0.77, 0.2 0.05, 1),
-    background 0.5 cubic-bezier(0.77, 0.2 0.05, 1), opacity 0.55s ease;
-}
-/* 🐞 Debug: X nicht aufeinander */
-.clicked {
-  _position: relative;
+  position: relative;
+  transition: transform 0.5s cubic-bezier(0.77, 0.2 0.05, 1), opacity 0.55s ease;
 }
 .clicked:first-child {
-  _position: absolute;
-  transform: rotate(45deg);
+  transform: translateY(250%) rotate(45deg);
   transform-origin: center;
-  _top: 50;
 }
 .clicked:nth-last-child(2) {
   opacity: 0;
 }
 .clicked:last-child {
-  _position: absolute;
-  transform: rotate(-45deg);
+  transform: translateY(-250%) rotate(-45deg);
   transform-origin: center;
-  _top: 50;
 }
 .nav {
   color: var(--clr-surface);
@@ -342,28 +328,30 @@ nav a {
 
 /* Input select */
 .select-wrapper {
+  margin-top: 20px;
   position: relative;
 }
 select {
   background-color: var(--clr-surface);
-  border: 2px solid var(--clr-primary);
+  border: 1.75px solid var(--clr-primary);
   border-radius: 2px;
   font-family: var(--font-sourcesanspro);
   font-size: 16px;
   font-weight: 600;
   height: 36px;
-  /*🐞 Debug: Option wird beschnitten */
-  padding: 8px 20px;
+  padding: 0 20px;
   width: 100%;
 }
 .icon-wrapper {
   align-items: center;
   background-color: var(--clr-secondary);
+  border-color: var(--clr-primary);
+  border-style: solid;
+  border-width: 1.75px 1.75px 1.75px 0;
+  border-radius: 0 2px 2px 0;
   display: flex;
   inset-block: 0;
   justify-content: center;
-  margin: 2px;
-  padding: 0.5rem;
   pointer-events: none;
   position: absolute;
   right: 0;

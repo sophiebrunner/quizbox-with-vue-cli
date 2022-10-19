@@ -19,7 +19,7 @@
   >
   <BaseList :list-items="quizData" class="list-item"
     ><template #list-item="scopedData">
-      <div class="checklists list-item list-item--checklist">
+      <div class="flex-container--checklist list-item list-item--checklist">
         <input
           type="checkbox"
           :id="scopedData.item.category"

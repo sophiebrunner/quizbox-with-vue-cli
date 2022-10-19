@@ -1,8 +1,5 @@
 <template>
-  <BaseHeader
-    :headline="textForPageHeader.headline"
-    class="grid-container--headline"
-  >
+  <BaseHeader :headline="textForPageHeader.headline" class="grid-container">
     <template v-slot:description>
       <p v-if="sessionUnfinished" class="grid-area--description">
         {{ textForPageHeader.description }}

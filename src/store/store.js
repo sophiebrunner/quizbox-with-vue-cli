@@ -4,7 +4,6 @@ import { getNrOfRandomizedQuestionsFromSelCategories } from "./helpers";
 import router from "@/router";
 
 const defaultState = {
-  quizData: [],
   selectedNr: 10,
   selectedCategories: [],
   questionsForSessions: [],
@@ -15,7 +14,7 @@ const defaultState = {
 
 const store = createStore({
   state() {
-    return { ...defaultState };
+    return { quizData: [], ...defaultState };
   },
   /* User input, change of data in components */
   mutations: {
@@ -53,22 +52,9 @@ const store = createStore({
       localStorage.setItem("currentQuestionIndex", state.currentQuestionIndex);
     },
     finishQuizboxSession(state) {
-      // Reset data for next session
-      // state = { ...defaultState };
-      const {
-        selectedNr,
-        selectedCategories,
-        questionsForSessions,
-        currentQuestionIndex,
-        currentQuestion,
-        sessionActive,
-      } = defaultState;
-      state.selectedNr = selectedNr;
-      state.selectedCategories = selectedCategories;
-      state.questionsForSessions = questionsForSessions;
-      state.currentQuestionIndex = currentQuestionIndex;
-      state.currentQuestion = currentQuestion;
-      state.sessionActive = sessionActive;
+      Object.keys(defaultState).forEach((key) => {
+        state[key] = defaultState[key];
+      });
       localStorage.clear();
       router.push({ name: "quizbox" });
     },

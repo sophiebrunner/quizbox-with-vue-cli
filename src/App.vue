@@ -1,16 +1,18 @@
 <template>
   <header class="page-header">
-    <div class="hamburger-menu-wrapper">
+    <div class="page-header__menu--primary">
       <nav class="hamburger-menu" @click="toggleMenu">
         <span class="hamburger-menu__icon" :class="{ clicked: showNav }"></span>
         <span class="hamburger-menu__icon" :class="{ clicked: showNav }"></span>
         <span class="hamburger-menu__icon" :class="{ clicked: showNav }"></span>
       </nav>
       <h1>Quizbox</h1>
-      <div class="menu__triangle menu__triangle--primary"></div>
     </div>
-    <nav class="nav" :class="{ active: showNav, hidden: !showNav }">
-      <div class="nav-list-wrapper">
+    <nav
+      class="page-header__menu--secondary"
+      :class="{ visible: showNav, hidden: !showNav }"
+    >
+      <div class="nav">
         <ul class="nav__list">
           <li class="nav__item">
             <router-link :to="{ name: 'quizbox' }" class="text--light-colored"
@@ -29,7 +31,6 @@
           </li>
         </ul>
       </div>
-      <div class="menu__triangle menu__triangle--secondary"></div>
     </nav>
   </header>
   <main @click="collapseMenu">

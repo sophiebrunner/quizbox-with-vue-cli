@@ -1,12 +1,12 @@
 <template>
   <header class="page-header">
     <div class="page-header__menu--primary">
-      <nav class="hamburger-menu" @click="toggleMenu">
+      <nav class="hamburger-menu" @click="ontoggleMenu">
         <span class="hamburger-menu__icon" :class="{ clicked: showNav }"></span>
         <span class="hamburger-menu__icon" :class="{ clicked: showNav }"></span>
         <span class="hamburger-menu__icon" :class="{ clicked: showNav }"></span>
       </nav>
-      <h1>Quizbox</h1>
+      <h1 :class="{ headingVisible: desktopView }">Quizbox</h1>
     </div>
     <nav
       class="page-header__menu--secondary"
@@ -33,7 +33,7 @@
       </div>
     </nav>
   </header>
-  <main @click="collapseMenu">
+  <main @click="oncollapseMenu">
     <router-view />
   </main>
 </template>
@@ -43,6 +43,8 @@ export default {
   data() {
     return {
       showNav: false,
+      windowSize: window.innerWidth,
+      desktopView: false,
     };
   },
   computed: {
@@ -51,15 +53,26 @@ export default {
     },
   },
   methods: {
-    toggleMenu() {
+    ontoggleMenu() {
       this.showNav = !this.showNav;
+      if (this.windowSize >= 992) {
+        this.desktopView = !this.desktopView;
+      }
     },
-    collapseMenu() {
+    oncollapseMenu() {
       this.showNav = false;
+    },
+    onResize() {
+      this.windowSize = window.innerWidth;
     },
   },
   created() {
     this.$store.dispatch("fetchDataFromApi");
+  },
+  mounted() {
+    this.$nextTick(() => {
+      window.addEventListener("resize", this.onResize);
+    });
   },
 };
 </script>

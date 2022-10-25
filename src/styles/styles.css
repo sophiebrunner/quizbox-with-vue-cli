@@ -37,18 +37,19 @@
   -webkit-box-sizing: border-box;
 }
 :root {
-  --font-montserrat: "Montserrat", sans-serif;
-  --font-sourcesanspro: "Source Sans Pro", sans-serif;
   --clr-primary: #6a1cc3;
   --clr-primary-inactive: #6a1cc326;
   --clr-secondary: #8849cf;
   --clr-surface: #fbfbfb;
   --clr-text: rgba(0, 0, 0, 87%);
+  --font-montserrat: "Montserrat", sans-serif;
+  --font-sourcesanspro: "Source Sans Pro", sans-serif;
+  --el-width: 834px;
 }
 body {
-  margin: 0 auto;
-  width: 100vw;
   background: var(--clr-surface);
+  margin: 0 auto;
+  max-width: var(--el-width);
 }
 .page-header {
   height: 109px;
@@ -83,6 +84,7 @@ h1 {
   font-weight: 600;
   height: 95px;
   justify-content: center;
+  max-width: var(--el-width);
   text-transform: uppercase;
 }
 h2 {
@@ -130,8 +132,8 @@ p + p {
 .page-header__menu--primary::after,
 .page-header__menu--secondary::after {
   content: "";
-  border-left: 50vw solid transparent;
-  border-right: 50vw solid transparent;
+  border-left: 417px solid transparent;
+  border-right: 417px solid transparent;
   position: absolute;
 }
 .page-header__menu--primary::after {
@@ -172,12 +174,12 @@ p + p {
 .page-header__menu--secondary {
   backface-visibility: hidden;
   color: var(--clr-surface);
-  cursor: pointer;
   font-family: var(--font-montserrat);
   font-size: 16px;
+  max-width: var(--el-width);
+  position: relative;
   text-transform: uppercase;
   transition: transform 0.5s ease-in-out;
-  width: 100vw;
 }
 .page-header__menu--secondary::after {
   border-top: 14px solid var(--clr-secondary);
@@ -426,9 +428,118 @@ ul {
 /* Responsive */
 @media screen and (min-width: 992px) {
   #app {
-    _display: flex;
+    display: flex;
+    gap: 36px;
+  }
+  body {
+    max-width: 100vw;
+  }
+  main {
+    margin: 36px auto 0 auto;
+    max-width: 1020px;
+  }
+  h1 {
+    text-align: left;
+    font-size: 24px;
+    background-color: var(--clr-secondary);
+    position: absolute;
+    left: 100%;
+    z-index: -2;
+    transform: translateX(-300%);
+    transition: transform 0.5s ease-in-out, z-index 0.1s ease-in-out;
+  }
+  .headingVisible {
+    transform: translateX(81px);
+    position: absolute;
+    z-index: 2;
   }
   .page-header {
-    _width: 20vw;
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    width: 109px;
+  }
+  .page-header__menu--primary {
+    background-color: var(--clr-primary);
+    height: 100vh;
+    width: 81px;
+    z-index: 3;
+  }
+  .page-header__menu--primary::after,
+  .page-header__menu--secondary::after {
+    content: "";
+    border-bottom: 50vh solid transparent;
+    border-right: none;
+    border-top: 50vh solid transparent;
+    position: absolute;
+  }
+  .page-header__menu--primary::after {
+    border-left: 14px solid var(--clr-primary);
+    top: 0;
+    left: 100%;
+  }
+  .page-header__menu--secondary {
+    backface-visibility: hidden;
+    color: var(--clr-surface);
+    font-family: var(--font-montserrat);
+    font-size: 16px;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    text-transform: uppercase;
+    transition: transform 0.5s ease-in-out;
+    width: 370px;
+  }
+  .page-header__menu--secondary::after {
+    border-left: 14px solid var(--clr-secondary);
+    left: 450px;
+    right: 0;
+    top: 0;
+  }
+  .nav {
+    background: var(--clr-secondary);
+    height: 100vh;
+    list-style-type: none;
+    left: 81px;
+    margin: 0;
+    padding-left: 0;
+    position: relative;
+  }
+  .nav__list {
+    position: absolute;
+    transform: translate(50%, -50%);
+    max-width: 200px;
+  }
+  .nav__item {
+    height: 32px;
+    position: relative;
+    right: 50%;
+    transform: translateX(50%);
+  }
+  nav a {
+    border-bottom: 2px solid var(--clr-surface);
+    font-family: var(--font-montserrat);
+    font-size: 16px;
+    font-weight: 500;
+    left: 0;
+    padding: 8px 0 8px 4px;
+    position: absolute;
+    text-decoration: none;
+    top: 0;
+    width: 100%;
+  }
+  .nav__item a:hover {
+    background-color: var(--clr-primary);
+  }
+  a.router-link-exact-active {
+    background-color: var(--clr-primary);
+  }
+  .hidden {
+    transform: translateX(-360px);
+    z-index: 0;
+  }
+  /* Secondary menu is shown in its original position */
+  .visible {
+    transform: translateY(0);
   }
 }

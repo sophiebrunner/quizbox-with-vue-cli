@@ -298,6 +298,7 @@ select {
   background-color: var(--clr-surface);
   border: 1.75px solid var(--clr-primary);
   border-radius: 2px;
+  color: var(--clr-text);
   font-family: var(--font-sourcesanspro);
   font-size: 16px;
   font-weight: 600;
@@ -530,5 +531,15 @@ ul {
 @media screen and (min-width: 1440px) {
   .flex-container--main {
     width: var(--el-width);
+  }
+}
+@media screen and (max-width: 360px) {
+  nav a {
+    font-size: 12px;
+  }
+}
+@media screen and (max-width: 360px) {
+  nav a {
+    font-size: 12px;
   }
 }

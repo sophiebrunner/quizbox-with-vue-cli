@@ -6,7 +6,7 @@
         <span class="hamburger-menu__icon" :class="{ clicked: showNav }"></span>
         <span class="hamburger-menu__icon" :class="{ clicked: showNav }"></span>
       </nav>
-      <h1 :class="{ headingVisible: desktopView }">Quizbox</h1>
+      <h1 :class="{ headingVisible: showNav }">Quizbox</h1>
     </div>
     <nav
       class="page-header__menu--secondary"
@@ -34,7 +34,9 @@
     </nav>
   </header>
   <main @click="oncollapseMenu">
-    <router-view />
+    <div class="flex-container--main">
+      <router-view />
+    </div>
   </main>
 </template>
 
@@ -43,8 +45,6 @@ export default {
   data() {
     return {
       showNav: false,
-      windowSize: window.innerWidth,
-      desktopView: false,
     };
   },
   computed: {
@@ -55,24 +55,13 @@ export default {
   methods: {
     ontoggleMenu() {
       this.showNav = !this.showNav;
-      if (this.windowSize >= 992) {
-        this.desktopView = !this.desktopView;
-      }
     },
     oncollapseMenu() {
       this.showNav = false;
     },
-    onResize() {
-      this.windowSize = window.innerWidth;
-    },
   },
   created() {
     this.$store.dispatch("fetchDataFromApi");
-  },
-  mounted() {
-    this.$nextTick(() => {
-      window.addEventListener("resize", this.onResize);
-    });
   },
 };
 </script>
